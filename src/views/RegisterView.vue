@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterLink} from 'vue-router'
 import { ref } from 'vue';
+import {useUsersStore} from '../stores/users'
+
+const store = useUsersStore()
 
 const name = ref<string>('')
 const lastName = ref<string>('')
@@ -10,6 +13,14 @@ const password = ref<string>('')
 const handleRegister = (e:Event) =>
 {
     e.preventDefault()
+
+    store.addUser({
+        name: name.value,
+        lastName: lastName.value,
+        email: email.value,
+        password: password.value,
+    });
+    
     name.value = ('')
     lastName.value = ('')
     email.value = ('')
