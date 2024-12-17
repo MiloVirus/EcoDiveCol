@@ -7,6 +7,11 @@ interface User {
     password: string
 }
 
+interface ExistingUser {
+    email: string,
+    password: string
+}
+
 export const useUsersStore = defineStore('user',
     {
         state:() =>({
@@ -22,9 +27,23 @@ export const useUsersStore = defineStore('user',
                     const {password, ...userWithoutPassword} = newUser
                     this.users.push(userWithoutPassword)
                     alert('Register Succesful !')
+                    return
                 } catch (error) {
                     console.log(error)
+                    return(error)
                 }
+            },
+            getUser(loginUser : ExistingUser)
+            {
+                const emailFound = this.users.find(element=>loginUser.email == element.email)
+                if(emailFound)
+                {
+                    alert("Login Successful")
+                }
+                else{
+                    alert("Error Try again")
+                }
+                return
             }
         }
     }

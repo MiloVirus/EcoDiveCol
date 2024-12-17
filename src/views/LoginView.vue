@@ -1,5 +1,21 @@
-<script setup lang="ts">
-import { RouterLink} from 'vue-router'
+<script setup lang = "ts">
+import { RouterLink} from 'vue-router' 
+import { ref } from 'vue';
+import { useUsersStore } from '@/stores/users';
+
+const store = useUsersStore()
+
+const email = ref<string>('')
+const password = ref<string>('')
+
+const handleLogin = (e: Event) => 
+{
+    e.preventDefault()
+    store.getUser({"email": email.value, "password": password.value})
+    email.value = ''
+    password.value = ''
+}
+
 </script>
 
 <template>
@@ -18,10 +34,10 @@ import { RouterLink} from 'vue-router'
                     <h4>Por favor ingresa tus datos</h4>
                     <form class="loginContainer__form">
                         <label for="form__label" class="form__label">Correo Electrónico</label>
-                        <input id="form__input" type="text">
+                        <input id="form__input" v-model="email" type="text">
                         <label for="form__label" class="form__label">Password</label>
-                        <input id="form__input" type="password">
-                        <button class="form__button">Sign In</button>
+                        <input id="form__input" v-model="password" type="password">
+                        <button class="form__button" @click="handleLogin">Sign In</button>
                     </form>
                     <RouterLink to="/register"><h5>¿No estás registrado?</h5></RouterLink>
             </section>
