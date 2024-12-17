@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 
 interface User {
-    id: number;
     name: string;
     lastName: string,
     email: string,
@@ -11,9 +10,22 @@ interface User {
 export const useUsersStore = defineStore('user',
     {
         state:() =>({
-            users:[] as User[],
+            users:[] as Omit<User, 'password'>[],
             loading: false,
             error: null as string | null,
         }),
+        actions:
+        {
+            addUser(newUser : User)
+            {
+                try {
+                    const {password, ...userWithoutPassword} = newUser
+                    this.users.push(userWithoutPassword)
+                    alert('Register Succesful !')
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
     }
 )
