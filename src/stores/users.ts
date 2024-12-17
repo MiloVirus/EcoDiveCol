@@ -34,16 +34,19 @@ export const useUsersStore = defineStore('user',
                 }
             },
             getUser(loginUser : ExistingUser)
-            {
-                const emailFound = this.users.find(element=>loginUser.email == element.email)
-                if(emailFound)
+            {   
+                if(loginUser)
                 {
-                    alert("Login Successful")
+                    const emailFound = this.users.find(element=>loginUser.email == element.email)
+                    if(emailFound)
+                    {
+                        alert("Login Successful")
+                    }
+                    else{
+                        alert("Error Try again")
+                    }
                 }
-                else{
-                    alert("Error Try again")
-                }
-                return
+            return 
             }
         }
     }
