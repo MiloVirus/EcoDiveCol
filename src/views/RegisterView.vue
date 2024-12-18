@@ -15,16 +15,16 @@ const handleRegister = (e:Event) =>
     e.preventDefault()
 
     store.addUser({
-        name: name.value,
-        lastName: lastName.value,
+        first_name: name.value,
+        last_name: lastName.value,
         email: email.value,
         password: password.value,
     });
     
-    name.value = ('')
+   /*  name.value = ('')
     lastName.value = ('')
     email.value = ('')
-    password.value = ('')
+    password.value = ('') */
 }
 
 </script>
