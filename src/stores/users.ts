@@ -1,8 +1,14 @@
 import { defineStore } from "pinia";
+import axios from "axios";
 
 interface User {
-    name: string;
-    lastName: string,
+    first_name: string;
+    last_name: string,
+    email: string,
+    password: string
+}
+
+interface ExistingUser {
     email: string,
     password: string
 }
@@ -10,21 +16,36 @@ interface User {
 export const useUsersStore = defineStore('user',
     {
         state:() =>({
-            users:[] as Omit<User, 'password'>[],
+            users:[] as User[],
             loading: false,
             error: null as string | null,
         }),
         actions:
         {
-            addUser(newUser : User)
+            async addUser(newUser : User)
             {
                 try {
-                    const {password, ...userWithoutPassword} = newUser
-                    this.users.push(userWithoutPassword)
-                    alert('Register Succesful !')
+                    const response = await axios.post('http://localhost:3000/users', newUser)
+                    this.users.push(response.data)
                 } catch (error) {
                     console.log(error)
+                    return(error)
                 }
+            },
+            getUser(loginUser : ExistingUser)
+            {   
+                if(loginUser)
+                {
+                    const emailFound = this.users.find(element=>loginUser.email == element.email)
+                    if(emailFound)
+                    {
+                        alert("Login Successful")
+                    }
+                    else{
+                        alert("Error Try again")
+                    }
+                }
+            return 
             }
         }
     }
