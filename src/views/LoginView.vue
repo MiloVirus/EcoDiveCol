@@ -11,7 +11,7 @@ const password = ref<string>('')
 const handleLogin = (e: Event) => 
 {
     e.preventDefault()
-    store.getUser({"email": email.value, "password": password.value})
+    store.signIn({"email": email.value, "password": password.value})
     email.value = ''
     password.value = ''
 }
@@ -68,7 +68,7 @@ a
 
 .mainLoginContainer {
     width: 50%;
-    background-color: blueviolet;
+    background-color: rgb(134, 45, 218);
 }
 h1
 {

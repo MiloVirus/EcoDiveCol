@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { getTokenFromCookies } from "@/utils/cookieUtils";
 
 interface User {
     first_name: string;
@@ -15,37 +16,37 @@ interface ExistingUser {
 
 export const useUsersStore = defineStore('user',
     {
-        state:() =>({
-            users:[] as User[],
+        state: () => ({
+            users: [] as User[],
+            isAuthenticated : false,
             loading: false,
             error: null as string | null,
         }),
         actions:
         {
-            async addUser(newUser : User)
-            {
+            async addUser(newUser: User) {
                 try {
-                    const response = await axios.post('http://localhost:3000/users', newUser)
-                    this.users.push(response.data)
+                    await axios.post('http://localhost:3000/users', newUser)
                 } catch (error) {
                     console.log(error)
-                    return(error)
+                    return (error)
                 }
             },
-            getUser(loginUser : ExistingUser)
-            {   
-                if(loginUser)
-                {
-                    const emailFound = this.users.find(element=>loginUser.email == element.email)
-                    if(emailFound)
-                    {
-                        alert("Login Successful")
-                    }
-                    else{
-                        alert("Error Try again")
+            async signIn(loginUser: ExistingUser) {
+                if (loginUser) {
+                    try {
+                        const response = await axios.post('http://localhost:3000/auth/login', loginUser,{ withCredentials: true}) 
+                        const token = getTokenFromCookies()
+                        if(token)
+                        {
+                            this.isAuthenticated = true 
+                            console.log('Login exitoso', response) 
+                        }
+                    } catch (error) {
+                        return (error)
                     }
                 }
-            return 
+                return
             }
         }
     }
