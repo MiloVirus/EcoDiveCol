@@ -2,18 +2,20 @@
 import { RouterLink} from 'vue-router' 
 import { ref } from 'vue';
 import { useUsersStore } from '@/stores/users';
+import router from '@/router';
 
 const store = useUsersStore()
 
 const email = ref<string>('')
 const password = ref<string>('')
 
-const handleLogin = (e: Event) => 
+const handleLogin = async(e: Event) => 
 {
     e.preventDefault()
-    store.signIn({"email": email.value, "password": password.value})
+    await store.signIn({"email": email.value, "password": password.value})
     email.value = ''
     password.value = ''
+    router.push({ name: 'dashboard' });
 }
 
 </script>

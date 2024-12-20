@@ -36,17 +36,43 @@ export const useUsersStore = defineStore('user',
                 if (loginUser) {
                     try {
                         const response = await axios.post('http://localhost:3000/auth/login', loginUser,{ withCredentials: true}) 
+                        console.log('Respuesta del servidor:', response);
+
                         const token = getTokenFromCookies()
-                        if(token)
-                        {
+                        console.log('Token recibido:', token);
                             this.isAuthenticated = true 
-                            console.log('Login exitoso', response) 
-                        }
+                            console.log('Login exitoso') 
+                        
                     } catch (error) {
                         return (error)
                     }
                 }
                 return
+            },
+            async logOut()
+            {
+                try {
+                    await axios.post('http://localhost:3000/auth/logout', null, {
+                        withCredentials: true,
+                    });
+                    console.log('logout successful')
+                } catch (error) {
+                    console.log(error)
+                }
+            },
+
+            async checkAuth()
+            {
+                try {
+                    const response = await axios.get('http://localhost:3000/auth/check',{
+                        withCredentials: true
+                    })
+                    this.isAuthenticated = response.data.isAuthenticated
+                    console.log(response.data)
+                    
+                } catch (error) {
+                    console.log('error')
+                }
             }
         }
     }

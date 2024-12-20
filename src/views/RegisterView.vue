@@ -21,10 +21,10 @@ const handleRegister = (e:Event) =>
         password: password.value,
     });
     
-   /*  name.value = ('')
+    name.value = ('')
     lastName.value = ('')
     email.value = ('')
-    password.value = ('') */
+    password.value = ('') 
 }
 
 </script>
