@@ -1,18 +1,35 @@
 <script setup lang="ts">
 import Sidebar from '@/components/Sidebar.vue';
+import { useUsersStore } from '@/stores/users';
+import { onMounted } from 'vue';
+import { ref } from 'vue';
 
+const userStore = useUsersStore()
+const name = ref('')
+const lastName = ref('')
+const email = ref('')
+
+onMounted( async () =>{
+    await userStore.getProfile()
+    name.value = userStore.users[0].first_name || '';
+    lastName.value = userStore.users[0].last_name || '';
+    email.value = userStore.users[0].email || '';
+})
 
 </script>
 
 <template>
     <div class="dashboard-container">
 
-        <Sidebar/>
+        <Sidebar
+        :name="name"
+        :lastName="lastName"
+        :email="email"/>
 
         <main class="main-content">
 
             <header class="header">
-                <h1 class="welcome-message">Hello, Sarah</h1>
+                <h1 class="welcome-message">Hello, {{name}}</h1>
                 <button class="add-project-btn">Add New Project</button>
             </header>
 

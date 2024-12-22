@@ -1,22 +1,43 @@
 <script setup lang="ts">
 
 import {useUsersStore} from '../stores/users'
+import router from '@/router';
+
 const store = useUsersStore()
 
-const logOut = () => 
+const {name, lastName} = defineProps(
+    {
+        name:{
+            type: String,
+            required: true
+        },
+        lastName:
+        {
+            type: String,
+            required: true
+        },
+        email:
+        {
+            type: String,
+            required: true
+        }
+    }
+)
+
+const logOut = async() => 
 {
-    store.logOut()
+    await store.logOut()
+    router.push({ name: 'login' });
 }
 
 </script>
 
 <template>
-   <aside class="sidebar">
+        <aside class="sidebar">
             <div class="user-info">
                 <img src="https://via.placeholder.com/50" alt="User" class="user-avatar" />
                 <div>
-                    <h2 class="user-name">Sarah Connor</h2>
-                    <p class="user-email">sarahc@gmail.com</p>
+                    <h2 class="user-name">{{name}}</h2>
                 </div>
             </div>
             <nav class="menu">

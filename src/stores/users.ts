@@ -55,6 +55,7 @@ export const useUsersStore = defineStore('user',
                     await axios.post('http://localhost:3000/auth/logout', null, {
                         withCredentials: true,
                     });
+                    this.isAuthenticated = false;
                     console.log('logout successful')
                 } catch (error) {
                     console.log(error)
@@ -68,6 +69,19 @@ export const useUsersStore = defineStore('user',
                         withCredentials: true
                     })
                     this.isAuthenticated = response.data.isAuthenticated
+                    console.log(response.data)
+                    
+                } catch (error) {
+                    console.log('error')
+                }
+            },
+            async getProfile()
+            {
+                try {
+                    const response = await axios.get('http://localhost:3000/auth/profile',{
+                        withCredentials: true
+                    })
+                    this.users.push(response.data)
                     console.log(response.data)
                     
                 } catch (error) {

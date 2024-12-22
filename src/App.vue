@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import { useUsersStore } from './stores/users';
+import { onMounted } from 'vue';
+
+const userStore = useUsersStore()
+
+onMounted(async() =>
+{
+    await userStore.checkAuth()
+})
+
 </script>
 
 <template>
