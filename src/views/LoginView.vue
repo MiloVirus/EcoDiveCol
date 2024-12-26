@@ -1,5 +1,5 @@
-<script setup lang = "ts">
-import { RouterLink} from 'vue-router' 
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import { ref } from 'vue';
 import { useUsersStore } from '@/stores/users';
 import router from '@/router';
@@ -9,13 +9,19 @@ const store = useUsersStore()
 const email = ref<string>('')
 const password = ref<string>('')
 
-const handleLogin = async(e: Event) => 
-{
+const handleLogin = async (e: Event) => {
     e.preventDefault()
-    await store.signIn({"email": email.value, "password": password.value})
-    email.value = ''
-    password.value = ''
-    router.push({ name: 'dashboard' });
+    try {
+        await store.signIn({ "email": email.value, "password": password.value })
+        email.value = ''
+        password.value = ''
+        router.push({ name: 'dashboard' });
+    } catch (error) {
+        console.log(error)
+    }
+
+
+
 }
 
 </script>
@@ -30,18 +36,20 @@ const handleLogin = async(e: Event) =>
                 <img class="logoContainer__logo" src="../assets/img/ecodivecol-white.png" alt="logo">
             </div>
             <section class="loginContainer">
-                    <h1>
-                        Bienvenido de vuelta
-                    </h1>
-                    <h4>Por favor ingresa tus datos</h4>
-                    <form class="loginContainer__form">
-                        <label for="form__label" class="form__label">Correo Electrónico</label>
-                        <input id="form__input" v-model="email" type="text">
-                        <label for="form__label" class="form__label">Password</label>
-                        <input id="form__input" v-model="password" type="password">
-                        <button class="form__button" @click="handleLogin">Sign In</button>
-                    </form>
-                    <RouterLink to="/register"><h5>¿No estás registrado?</h5></RouterLink>
+                <h1>
+                    Bienvenido de vuelta
+                </h1>
+                <h4>Por favor ingresa tus datos</h4>
+                <form class="loginContainer__form">
+                    <label for="form__label" class="form__label">Correo Electrónico</label>
+                    <input id="form__input" v-model="email" type="text">
+                    <label for="form__label" class="form__label">Password</label>
+                    <input id="form__input" v-model="password" type="password">
+                    <button class="form__button" @click="handleLogin">Sign In</button>
+                </form>
+                <RouterLink to="/register">
+                    <h5>¿No estás registrado?</h5>
+                </RouterLink>
             </section>
         </div>
     </section>
@@ -53,17 +61,19 @@ const handleLogin = async(e: Event) =>
     flex-wrap: nowrap;
     width: 100vw;
 }
+
 .imageContainer {
     width: 60%;
-    height: 100vh; 
-    overflow: hidden; 
+    height: 100vh;
+    overflow: hidden;
 }
-a
-{
+
+a {
     text-decoration: none;
 }
+
 .backgroundImg {
-    width: 100%; 
+    width: 100%;
     height: 100%;
     object-fit: cover;
 }
@@ -72,12 +82,12 @@ a
     width: 50%;
     background-color: rgb(134, 45, 218);
 }
-h1
-{
+
+h1 {
     text-align: center;
 }
-.loginContainer
-{
+
+.loginContainer {
     display: flex;
     align-items: center;
     align-self: center;

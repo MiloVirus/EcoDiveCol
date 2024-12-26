@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import AchievementRankCard from '@/components/AchievementRankCard.vue';
+import Achievements from '@/components/Achievements.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import { useUsersStore } from '@/stores/users';
 import { onMounted } from 'vue';
@@ -42,6 +44,7 @@ onMounted( async () =>{
                         <div class="progress purple-progress" style="width: 96%;"></div>
                     </div>
                 </div>
+                <AchievementRankCard/>
                 <div class="project-card blue">
                     <h2>Mobile App Design</h2>
                     <p>12 tasks • 46%</p>
@@ -61,16 +64,7 @@ onMounted( async () =>{
             <!-- Tasks for Today -->
             <section class="tasks">
                 <h2 class="section-title">Tasks for Today</h2>
-                <ul class="task-list">
-                    <li class="task-item">
-                        <span class="task-name">Prepare Figma file</span>
-                        <input type="checkbox" />
-                    </li>
-                    <li class="task-item">
-                        <span class="task-name">Design UX wireframes</span>
-                        <input type="checkbox" />
-                    </li>
-                </ul>
+                <Achievements/>
             </section>
         </main>
     </div>

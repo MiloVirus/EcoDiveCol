@@ -46,7 +46,6 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
-
   if (to.name && ['login', 'register'].includes(to.name as string)) {
     if (authStore.isAuthenticated) {
       return next({ name: 'dashboard' });
