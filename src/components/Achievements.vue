@@ -23,5 +23,8 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
+.container
+{
+    padding: 5px;
+}
 </style>
