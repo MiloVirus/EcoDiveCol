@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 import AchievementsCard from './AchievementsCard.vue';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
+import Swal from 'sweetalert2';
 
 const logrosStore = useLogrosStore();
 const logrosLol = ref();
@@ -13,7 +14,7 @@ onMounted(async () => {
     logrosLol.value = logrosStore.logros;
 });
 
-const uploadImage = async (file: File, logroId: Number) => {
+const uploadImage = async (file: File, logroId: string) => {
     if (!file) return;
 
     try {
@@ -31,7 +32,7 @@ const uploadImage = async (file: File, logroId: Number) => {
         const formData = new FormData();
         formData.append('file', compressedFile);
         console.log(logroId)
-        formData.append('logroId', logroId.toString());
+        formData.append('logroId', logroId);
 
         const response = await axios.post('http://localhost:3000/upload', formData, {
             headers: {
@@ -39,8 +40,17 @@ const uploadImage = async (file: File, logroId: Number) => {
             },
         });
         console.log('Image uploaded successfully:', response.data);
+        Swal.fire({
+            icon: 'info',
+            title: `${response.data.message}`,
+        });
     } catch (error) {
         console.log(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${error}`,
+        });
     }
 };
 </script>
@@ -53,7 +63,7 @@ const uploadImage = async (file: File, logroId: Number) => {
       :puntos="logro.puntos"
       :imagen="logro.imagen"
       :uploadImage="uploadImage"
-      :logroId ="logro.logro_id" />
+      :logroId ="logro.logro_id"/>
   </div>
 </template>
 

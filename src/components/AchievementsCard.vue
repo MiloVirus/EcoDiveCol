@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineProps, ref } from 'vue';
 
-const {name, descripcion, puntos, imagen, uploadImage, logroId} = defineProps({
+const props = defineProps({
     name:{
         type: String,
         required: true
@@ -28,21 +28,24 @@ const {name, descripcion, puntos, imagen, uploadImage, logroId} = defineProps({
     },
     logroId:
     {
-        type: Number,
+        type: String,
         required: true
-    }
+    },
 })
+
+
 
 const selectedFile = ref<File | null>(null);
 
 const handleFileUpload = (event: Event) =>
 {
     const target = event.target as HTMLInputElement
-    console.log(logroId)
+    console.log(props.logroId)
     if(target.files && target.files[0])
     {
         selectedFile.value = target.files[0]
-        uploadImage(target.files[0], logroId)
+        console.log(props.logroId)
+        props.uploadImage(target.files[0], props.logroId)
     }
     
 }
@@ -56,10 +59,14 @@ const handleFileUpload = (event: Event) =>
         </div>
         <div class="nameContainer">
             <h2>{{ name }}</h2>
-            <p>{{ descripcion }}</p>
+            <p>{{ descripcion }} {{ logroId }}</p>
         </div>
         <div class="uploadContainer">
+      <!-- Estilizamos el botón de subida de archivos -->
+        <label class="customUploadButton">
+            Subir evidencia
             <input type="file" @change="handleFileUpload" />
+        </label>
         </div>
         <div class="puntosContainer">
             
@@ -80,6 +87,42 @@ const handleFileUpload = (event: Event) =>
     padding: 20px;
     background-color: rgb(34, 34, 34);
 }
+
+.customUploadButton {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.customUploadButton:hover {
+  background-color: #0056b3;
+}
+
+.customUploadButton input[type="file"] {
+  display: none; /* Oculta el input real */
+}
+
+.uploadButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.uploadButton:hover {
+  background-color: #0056b3;
+}
+
 .imageContainer
 {
     width: 10%;
