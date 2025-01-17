@@ -42,7 +42,7 @@ const uploadImage = async (file: File, logroId: string) => {
         console.log('Image uploaded successfully:', response.data);
         Swal.fire({
             icon: 'info',
-            title: `${response.data.message}`,
+            title: `${response.data}`,
         });
     } catch (error) {
         console.log(error);

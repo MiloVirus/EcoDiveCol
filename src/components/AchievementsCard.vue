@@ -59,10 +59,9 @@ const handleFileUpload = (event: Event) =>
         </div>
         <div class="nameContainer">
             <h2>{{ name }}</h2>
-            <p>{{ descripcion }} {{ logroId }}</p>
+            <p>{{ descripcion }}</p>
         </div>
         <div class="uploadContainer">
-      <!-- Estilizamos el botón de subida de archivos -->
         <label class="customUploadButton">
             Subir evidencia
             <input type="file" @change="handleFileUpload" />
