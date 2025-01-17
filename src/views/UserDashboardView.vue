@@ -61,7 +61,6 @@ onMounted( async () =>{
                 </div>
             </section>
 
-            <!-- Tasks for Today -->
             <section class="tasks">
                 <h2 class="section-title">Tasks for Today</h2>
                 <Achievements/>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { defineProps, ref } from 'vue';
 
-const {name, descripcion, puntos, imagen} = defineProps({
+const {name, descripcion, puntos, imagen, uploadImage, logroId} = defineProps({
     name:{
         type: String,
         required: true
@@ -19,8 +20,32 @@ const {name, descripcion, puntos, imagen} = defineProps({
     {
         type: String,
         required: true
+    },
+    uploadImage:
+    {
+        type: Function,
+        required: true
+    },
+    logroId:
+    {
+        type: Number,
+        required: true
     }
 })
+
+const selectedFile = ref<File | null>(null);
+
+const handleFileUpload = (event: Event) =>
+{
+    const target = event.target as HTMLInputElement
+    console.log(logroId)
+    if(target.files && target.files[0])
+    {
+        selectedFile.value = target.files[0]
+        uploadImage(target.files[0], logroId)
+    }
+    
+}
 
 </script>
 
@@ -30,11 +55,11 @@ const {name, descripcion, puntos, imagen} = defineProps({
             <img class="imageContainer__img" :src="imagen" alt="">
         </div>
         <div class="nameContainer">
-            <h2>{{ name}}</h2>
+            <h2>{{ name }}</h2>
             <p>{{ descripcion }}</p>
         </div>
         <div class="uploadContainer">
-            <input type="file"  />
+            <input type="file" @change="handleFileUpload" />
         </div>
         <div class="puntosContainer">
             
