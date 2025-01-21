@@ -27,6 +27,16 @@ export const useLogrosStore = defineStore('logros',
                     console.log(error)
                     return error
                 }
+            },
+            async assignLogroToUser(logro_id: string)
+            {
+                try {
+                    const response = await axios.post('http://localhost:3000/logros/assign-logro', {logro_id} ,{ withCredentials: true})
+                    console.log(response)
+                } catch (error) {
+                    console.log(error)
+                    return error
+                }
             }
         }
     }

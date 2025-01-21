@@ -5,8 +5,10 @@ import AchievementsCard from './AchievementsCard.vue';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
+import { useUsersStore } from '@/stores/users';
 
 const logrosStore = useLogrosStore();
+const userStore = useUsersStore()
 const logrosLol = ref();
 
 onMounted(async () => {
@@ -39,10 +41,13 @@ const uploadImage = async (file: File, logroId: string) => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log('Image uploaded successfully:', response.data);
+        console.log('Image uploaded successfully:', response.data.message);
+
+        await logrosStore.assignLogroToUser(logroId);
+
         Swal.fire({
             icon: 'info',
-            title: `${response.data}`,
+            title: `${response.data.message}`,
         });
     } catch (error) {
         console.log(error);

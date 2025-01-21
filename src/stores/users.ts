@@ -3,6 +3,7 @@ import axios from "axios";
 import { getTokenFromCookies } from "@/utils/cookieUtils";
 
 interface User {
+    sub: string,
     first_name: string;
     last_name: string,
     email: string,
