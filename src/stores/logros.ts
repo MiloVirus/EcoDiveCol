@@ -20,7 +20,7 @@ export const useLogrosStore = defineStore('logros',
             async getAllLogros()
             {
                 try {
-                    const response = await axios.get('http://localhost:3000/logros')
+                    const response = await axios.get('http://localhost:3000/logros', {withCredentials:true})
                     console.log(response)
                     this.logros = response.data
                 } catch (error) {

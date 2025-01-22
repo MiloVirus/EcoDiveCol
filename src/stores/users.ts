@@ -58,6 +58,7 @@ export const useUsersStore = defineStore('user',
                     });
                     this.isAuthenticated = false;
                     console.log('logout successful')
+                    this.users = []
                 } catch (error) {
                     console.log(error)
                 }
