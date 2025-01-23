@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AchievementRankCard from '@/components/AchievementRankCard.vue';
 import Achievements from '@/components/Achievements.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import { useUsersStore } from '@/stores/users';
@@ -34,33 +33,6 @@ onMounted( async () =>{
                 <h1 class="welcome-message">Hello, {{name}}</h1>
                 <button class="add-project-btn">Add New Project</button>
             </header>
-
-
-            <section class="projects">
-                <div class="project-card purple">
-                    <h2>Web Development</h2>
-                    <p>10 tasks • 96%</p>
-                    <div class="progress-bar">
-                        <div class="progress purple-progress" style="width: 96%;"></div>
-                    </div>
-                </div>
-                <AchievementRankCard/>
-                <div class="project-card blue">
-                    <h2>Mobile App Design</h2>
-                    <p>12 tasks • 46%</p>
-                    <div class="progress-bar">
-                        <div class="progress blue-progress" style="width: 46%;"></div>
-                    </div>
-                </div>
-                <div class="project-card orange">
-                    <h2>Facebook Brand UI Kit</h2>
-                    <p>22 tasks • 73%</p>
-                    <div class="progress-bar">
-                        <div class="progress orange-progress" style="width: 73%;"></div>
-                    </div>
-                </div>
-            </section>
-
             <section class="tasks">
                 <h2 class="section-title">Tasks for Today</h2>
                 <Achievements/>

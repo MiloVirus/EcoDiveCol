@@ -13,6 +13,7 @@ const logrosLol = ref();
 
 onMounted(async () => {
     await logrosStore.getAllLogros();
+    await logrosStore.getLogrosCompletados();
     logrosLol.value = logrosStore.logros;
 });
 

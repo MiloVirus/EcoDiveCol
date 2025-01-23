@@ -22,7 +22,18 @@ export const useLogrosStore = defineStore('logros',
                 try {
                     const response = await axios.get('http://localhost:3000/logros', {withCredentials:true})
                     console.log(response)
-                    this.logros = response.data
+                    this.logros = [...this.logros, ...response.data]
+                } catch (error) {
+                    console.log(error)
+                    return error
+                }
+            },
+            async getLogrosCompletados()
+            {
+                try {
+                    const response = await axios.get('http://localhost:3000/logros/completedAchievements', {withCredentials:true})
+                    console.log(response)
+                    this.logros = [...this.logros, ...response.data]
                 } catch (error) {
                     console.log(error)
                     return error
