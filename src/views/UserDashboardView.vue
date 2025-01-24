@@ -3,19 +3,17 @@ import Achievements from '@/components/Achievements.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import { useUsersStore } from '@/stores/users';
 import { onMounted } from 'vue';
-import { ref } from 'vue';
+import { computed } from 'vue';
+const userStore = useUsersStore();
 
-const userStore = useUsersStore()
-const name = ref('')
-const lastName = ref('')
-const email = ref('')
+const name = computed(() => userStore.users[0]?.first_name || '');
+const lastName = computed(() => userStore.users[0]?.last_name || '');
+const email = computed(() => userStore.users[0]?.email || '');
+const puntos = computed(() => userStore.users[0]?.puntos || '');
 
-onMounted( async () =>{
-    await userStore.getProfile()
-    name.value = userStore.users[0].first_name || '';
-    lastName.value = userStore.users[0].last_name || '';
-    email.value = userStore.users[0].email || '';
-})
+onMounted(async () => {
+    await userStore.getProfile();
+});
 
 </script>
 
@@ -31,7 +29,7 @@ onMounted( async () =>{
 
             <header class="header">
                 <h1 class="welcome-message">Hello, {{name}}</h1>
-                <button class="add-project-btn">Add New Project</button>
+                <h1>{{ puntos }}</h1>
             </header>
             <section class="tasks">
                 <h2 class="section-title">Tasks for Today</h2>

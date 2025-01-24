@@ -26,6 +26,11 @@ const props = defineProps({
         type: Function,
         required: true
     },
+    completado:
+    {
+        type: Boolean,
+        required: true
+    },
     logroId:
     {
         type: String,
@@ -45,7 +50,7 @@ const handleFileUpload = (event: Event) =>
     {
         selectedFile.value = target.files[0]
         console.log(props.logroId)
-        props.uploadImage(target.files[0], props.logroId)
+        props.uploadImage(target.files[0], props.logroId, props.puntos)
     }
     
 }
@@ -53,7 +58,7 @@ const handleFileUpload = (event: Event) =>
 </script>
 
 <template>
-    <div class="cardContainer">
+    <div :class="{cardContainerTrue: completado, cardContainerFalse: !completado}" class="cardContainer">
         <div class="imageContainer">
             <img class="imageContainer__img" :src="imagen" alt="">
         </div>
@@ -62,10 +67,13 @@ const handleFileUpload = (event: Event) =>
             <p>{{ descripcion }}</p>
         </div>
         <div class="uploadContainer">
-        <label class="customUploadButton">
-            Subir evidencia
-            <input type="file" @change="handleFileUpload" />
-        </label>
+            <label class="customUploadButton" v-if="!completado">
+                Subir evidencia
+                <input type="file" @change="handleFileUpload" />
+            </label>
+            <label class="greenCheck" v-else>
+                <img src="../assets/img/greencheckmark.png" alt="">
+            </label>
         </div>
         <div class="puntosContainer">
             
@@ -76,7 +84,7 @@ const handleFileUpload = (event: Event) =>
 </template>
 
 <style scoped>
-.cardContainer
+.cardContainerFalse
 {
     display: flex;
     flex-direction: row;
@@ -84,7 +92,18 @@ const handleFileUpload = (event: Event) =>
     align-items: center;
     border: solid 1px rgb(34, 34, 34);;
     padding: 20px;
-    background-color: rgb(34, 34, 34);
+}
+
+.cardContainerTrue
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border: solid 1px rgb(34, 34, 34);;
+    padding: 20px;
+    background-color: gray;
+    opacity: 60%;
 }
 
 .customUploadButton {
@@ -117,7 +136,11 @@ const handleFileUpload = (event: Event) =>
   cursor: pointer;
   text-align: center;
 }
-
+.greenCheck img
+{
+    height: 60px;
+    width: 60px;
+}
 .uploadButton:hover {
   background-color: #0056b3;
 }

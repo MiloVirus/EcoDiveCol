@@ -1,13 +1,15 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { getTokenFromCookies } from "@/utils/cookieUtils";
+import { useLogrosStore } from "./logros";
 
 interface User {
     sub: string,
     first_name: string;
     last_name: string,
     email: string,
-    password: string
+    password: string,
+    puntos: number,
 }
 
 interface ExistingUser {
@@ -52,6 +54,7 @@ export const useUsersStore = defineStore('user',
             },
             async logOut()
             {
+                const logrosStore = useLogrosStore()
                 try {
                     await axios.post('http://localhost:3000/auth/logout', null, {
                         withCredentials: true,
@@ -59,6 +62,7 @@ export const useUsersStore = defineStore('user',
                     this.isAuthenticated = false;
                     console.log('logout successful')
                     this.users = []
+                    logrosStore.clearLogros()
                 } catch (error) {
                     console.log(error)
                 }

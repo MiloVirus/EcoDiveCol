@@ -2,6 +2,9 @@ import { defineStore } from "pinia";
 import axios from 'axios'
 
 interface Logros {
+    logro_id:string;
+    completado: boolean;
+
     name: string;
     descripcion: string;
     imagen: string;
@@ -33,7 +36,7 @@ export const useLogrosStore = defineStore('logros',
                 try {
                     const response = await axios.get('http://localhost:3000/logros/completedAchievements', {withCredentials:true})
                     console.log(response)
-                    this.logros = [...this.logros, ...response.data]
+                    this.logros = response.data
                 } catch (error) {
                     console.log(error)
                     return error
@@ -44,10 +47,15 @@ export const useLogrosStore = defineStore('logros',
                 try {
                     const response = await axios.post('http://localhost:3000/logros/assign-logro', {logro_id} ,{ withCredentials: true})
                     console.log(response)
+                    await this.getLogrosCompletados()
                 } catch (error) {
                     console.log(error)
                     return error
                 }
+            },
+            clearLogros()
+            {
+                this.logros = []
             }
         }
     }
