@@ -40,7 +40,7 @@ const uploadImage = async (file: File, logroId: string, puntos: number) => {
     });
     console.log('Image uploaded successfully:', response.data.message);
 
-    await logrosStore.assignLogroToUser(logroId);
+    await logrosStore.assignLogroToUser(puntos);
 
     Swal.fire({
       icon: 'info',

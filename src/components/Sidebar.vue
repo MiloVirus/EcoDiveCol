@@ -42,10 +42,8 @@ const logOut = async() =>
             </div>
             <nav class="menu">
                 <a href="#" class="menu-item active">Dashboard</a>
-                <a href="#" class="menu-item">Analytics</a>
-                <a href="#" class="menu-item">Task List</a>
-                <a href="#" class="menu-item">Tracking</a>
-                <a href="#" class="menu-item">Settings</a>
+                <a href="#" class="menu-item">Mis Viajes</a>
+                <a href="#" class="menu-item">Reclamo de puntos</a>
             </nav>
             <button @click="logOut" class="logout-button">Log out</button>
         </aside>

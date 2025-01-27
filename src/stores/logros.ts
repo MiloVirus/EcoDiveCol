@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from 'axios'
+import { useUsersStore } from './users'	
 
 interface Logros {
     logro_id:string;
@@ -20,17 +21,6 @@ export const useLogrosStore = defineStore('logros',
         }),
         actions:
         {
-            async getAllLogros()
-            {
-                try {
-                    const response = await axios.get('http://localhost:3000/logros', {withCredentials:true})
-                    console.log(response)
-                    this.logros = [...this.logros, ...response.data]
-                } catch (error) {
-                    console.log(error)
-                    return error
-                }
-            },
             async getLogrosCompletados()
             {
                 try {
@@ -42,12 +32,12 @@ export const useLogrosStore = defineStore('logros',
                     return error
                 }
             },
-            async assignLogroToUser(logro_id: string)
+            async assignLogroToUser(puntos:number)
             {
+                const userStore = useUsersStore()
                 try {
-                    const response = await axios.post('http://localhost:3000/logros/assign-logro', {logro_id} ,{ withCredentials: true})
-                    console.log(response)
                     await this.getLogrosCompletados()
+                    userStore.users[0].curr_puntos = userStore.users[0].curr_puntos + puntos
                 } catch (error) {
                     console.log(error)
                     return error

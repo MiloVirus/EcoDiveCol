@@ -9,7 +9,7 @@ interface User {
     last_name: string,
     email: string,
     password: string,
-    puntos: number,
+    curr_puntos: number,
 }
 
 interface ExistingUser {
@@ -93,6 +93,10 @@ export const useUsersStore = defineStore('user',
                 } catch (error) {
                     console.log('error')
                 }
+            },
+            clearProfile()
+            {
+                this.users = []
             }
         }
     }

@@ -9,7 +9,7 @@ const userStore = useUsersStore();
 const name = computed(() => userStore.users[0]?.first_name || '');
 const lastName = computed(() => userStore.users[0]?.last_name || '');
 const email = computed(() => userStore.users[0]?.email || '');
-const puntos = computed(() => userStore.users[0]?.puntos || '');
+const puntos = computed(() => userStore.users[0]?.curr_puntos || '');
 
 onMounted(async () => {
     await userStore.getProfile();
@@ -81,7 +81,7 @@ onMounted(async () => {
     background-color: #4c51bf;
 }
 
-/* Projects Section */
+
 .projects {
     display: flex;
     gap: 20px;
@@ -125,7 +125,6 @@ onMounted(async () => {
     background-color: #dd6b20;
 }
 
-/* Tasks Section */
 .tasks {
     margin-bottom: 20px;
 }
