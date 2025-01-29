@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import Achievements from '@/components/Achievements.vue';
+import PointsCashout from '@/components/PointsCashout.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import { useUsersStore } from '@/stores/users';
-import { onMounted } from 'vue';
-import { computed } from 'vue';
+import { useRewardsStore } from '@/stores/rewards';
+import { useLogrosStore } from '@/stores/logros';
+import { useDiveShopsStore } from '@/stores/diveshops';
+import { ref, onMounted, computed } from 'vue';
+
 const userStore = useUsersStore();
+const rewardsStore = useRewardsStore();
+const logrosStore = useLogrosStore();
+const diveshopStore = useDiveShopsStore();
+
+const currentView = ref<'dashboard' | 'misViajes' | 'reclamoDePuntos'>('dashboard');
 
 const name = computed(() => userStore.users[0]?.first_name || '');
 const lastName = computed(() => userStore.users[0]?.last_name || '');
@@ -12,34 +21,39 @@ const email = computed(() => userStore.users[0]?.email || '');
 const puntos = computed(() => userStore.users[0]?.curr_puntos || '');
 
 onMounted(async () => {
-    await userStore.getProfile();
+  await userStore.getProfile();
+  await rewardsStore.getRewards();
+  await logrosStore.getLogrosCompletados();
+  await diveshopStore.getDiveShops();
 });
 
+const updateView = (view: 'dashboard' | 'misViajes' | 'reclamoDePuntos') => {
+  currentView.value = view;
+};
+
+const viewComponents = {
+  dashboard: Achievements,
+  misViajes: Achievements, 
+  reclamoDePuntos: PointsCashout,
+};
 </script>
 
 <template>
-    <div class="dashboard-container">
+  <div class="dashboard-container">
+    <Sidebar :name="name" :lastName="lastName" :email="email" @updateView="updateView" />
 
-        <Sidebar
-        :name="name"
-        :lastName="lastName"
-        :email="email"/>
-
-        <main class="main-content">
-
-            <header class="header">
-                <h1 class="welcome-message">Hello, {{name}}</h1>
-                <h1>{{ puntos }}</h1>
-            </header>
-            <section class="tasks">
-                <h2 class="section-title">Tasks for Today</h2>
-                <Achievements/>
-            </section>
-        </main>
-    </div>
+    <main class="main-content">
+      <header class="header">
+        <h1 class="welcome-message">Hello, {{ name }}</h1>
+        <h1>{{ puntos }}</h1>
+      </header>
+      <section class="tasks">
+        <h2 class="section-title">Tasks for Today</h2>
+        <component :is="viewComponents[currentView]" :rewards="rewardsStore.rewards" :logros="logrosStore.logros" />
+      </section>
+    </main>
+  </div>
 </template>
-
-
 
 <style scoped>
 

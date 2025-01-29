@@ -1,52 +1,62 @@
 <script setup lang="ts">
-
-import {useUsersStore} from '../stores/users'
+import { useUsersStore } from '../stores/users';
 import router from '@/router';
+import { defineEmits, ref } from 'vue';
 
-const store = useUsersStore()
+const store = useUsersStore();
+const emit = defineEmits(['updateView']);
+const activeLink = ref('dashboard'); // Variable reactiva para el enlace activo
 
-const {name, lastName} = defineProps(
-    {
-        name:{
-            type: String,
-            required: true
-        },
-        lastName:
-        {
-            type: String,
-            required: true
-        },
-        email:
-        {
-            type: String,
-            required: true
-        }
-    }
-)
+const { name, lastName } = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+});
 
-const logOut = async() => 
-{
-    await store.logOut()
-    router.push({ name: 'login' });
-}
+const logOut = async () => {
+  await store.logOut();
+  router.push({ name: 'login' });
+};
 
+const updateView = (view: string) => {
+  activeLink.value = view; // Actualizar el enlace activo
+  emit('updateView', view);
+};
 </script>
 
 <template>
-        <aside class="sidebar">
-            <div class="user-info">
-                <img src="https://via.placeholder.com/50" alt="User" class="user-avatar" />
-                <div>
-                    <h2 class="user-name">{{name}}</h2>
-                </div>
-            </div>
-            <nav class="menu">
-                <a href="#" class="menu-item active">Dashboard</a>
-                <a href="#" class="menu-item">Mis Viajes</a>
-                <a href="#" class="menu-item">Reclamo de puntos</a>
-            </nav>
-            <button @click="logOut" class="logout-button">Log out</button>
-        </aside>
+  <aside class="sidebar">
+    <div class="user-info">
+      <img src="https://via.placeholder.com/50" alt="User" class="user-avatar" />
+      <div>
+        <h2 class="user-name">{{ name }}</h2>
+      </div>
+    </div>
+    <nav class="menu">
+      <a href="#" 
+         class="menu-item" 
+         :class="{ active: activeLink === 'dashboard' }" 
+         @click.prevent="updateView('dashboard')">Dashboard</a>
+      <a href="#" 
+         class="menu-item" 
+         :class="{ active: activeLink === 'misViajes' }" 
+         @click.prevent="updateView('misViajes')">Mis Viajes</a>
+      <a href="#" 
+         class="menu-item" 
+         :class="{ active: activeLink === 'reclamoDePuntos' }" 
+         @click.prevent="updateView('reclamoDePuntos')">Reclamo de puntos</a>
+    </nav>
+    <button @click="logOut" class="logout-button">Log out</button>
+  </aside>
 </template>
 
 <style lang="scss" scoped>
@@ -89,8 +99,7 @@ const logOut = async() =>
     background-color: #eaeaea;
 }
 
-.logout-button
-{
+.logout-button {
     background-color: blueviolet;
     border-radius: 10%;
     border: none;
@@ -98,9 +107,8 @@ const logOut = async() =>
     color: white;
     cursor: pointer;
 }
-.logout-button:hover
-{
+
+.logout-button:hover {
     background-color: rgb(91, 18, 160);   
 }
-
 </style>

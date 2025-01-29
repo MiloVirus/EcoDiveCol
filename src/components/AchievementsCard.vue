@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     name:{
@@ -63,7 +63,7 @@ const handleFileUpload = (event: Event) =>
             <img class="imageContainer__img" :src="imagen" alt="">
         </div>
         <div class="nameContainer">
-            <h2>{{ name }}</h2>
+            <h3>{{ name }}</h3>
             <p>{{ descripcion }}</p>
         </div>
         <div class="uploadContainer">
@@ -108,8 +108,8 @@ const handleFileUpload = (event: Event) =>
 
 .customUploadButton {
   display: inline-block;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 10px 10px;
+  font-size: 13px;
   color: white;
   background-color: #007bff;
   border: none;
@@ -162,8 +162,8 @@ const handleFileUpload = (event: Event) =>
 .imageContainer__img
 {
     border-radius: 50%;
-    height: 100px;
-    width: 100px;
+    height: 60px;
+    width:  60px;
     background-color: rgb(194, 236, 222);
 }
 .uploadContainer {

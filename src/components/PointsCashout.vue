@@ -1,21 +1,28 @@
 <script setup lang="ts">
-import { useUsersStore } from '@/stores/users';
-import { onMounted, ref } from 'vue';
 import CashoutCard from './CashoutCard.vue';
 
-const usersStore = useUsersStore();
-const userPoints = ref(0);
+interface Reward {
+  reward_id: string;
+  name: string;
+  descripcion: string;
+  puntos: 6000;
+  diveshop_id: string; 
+}
 
-onMounted(async () => {
-  await usersStore.fetchUser();
-  userPoints.value = usersStore.users[0]?.curr_puntos || 0;
-});
+
+defineProps<{
+  rewards: Reward[];
+}>();
 </script>
 
 <template>
-  <div class="container">
-    <h2>Possible Cashout</h2>
-    <CashoutCard :points="userPoints" />
+  <div class="container" v-for="reward in rewards" :key="reward.reward_id">
+    <CashoutCard 
+    :reward_id="reward.reward_id"
+    :name="reward.name"
+    :descripcion="reward.descripcion"
+    :puntos="reward.puntos"
+    :diveshop_id="reward.diveshop_id" />
   </div>
 </template>
 

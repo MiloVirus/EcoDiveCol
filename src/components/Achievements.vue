@@ -1,17 +1,21 @@
 <script setup lang="ts">
-import { useLogrosStore } from '@/stores/logros';
-import { onMounted } from 'vue';
 import AchievementsCard from './AchievementsCard.vue';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
 
-const logrosStore = useLogrosStore();
+interface Logro {
+  logro_id: string;
+  name: string;
+  descripcion: string;
+  puntos: number;
+  imagen: string;
+  completado: boolean;
+}
 
-
-onMounted(async () => {
-  await logrosStore.getLogrosCompletados(); 
-});
+defineProps<{
+  logros: Logro[];
+}>();
 
 const uploadImage = async (file: File, logroId: string, puntos: number) => {
   if (!file) return;
@@ -30,7 +34,6 @@ const uploadImage = async (file: File, logroId: string, puntos: number) => {
     formData.append('file', compressedFile);
     formData.append('logro_id', logroId);
     formData.append('puntos', puntos.toString());
-  
 
     const response = await axios.post('http://localhost:3000/upload', formData, {
       headers: {
@@ -40,14 +43,10 @@ const uploadImage = async (file: File, logroId: string, puntos: number) => {
     });
     console.log('Image uploaded successfully:', response.data.message);
 
-    await logrosStore.assignLogroToUser(puntos);
-
     Swal.fire({
       icon: 'info',
       title: `${response.data.message}`,
     });
-
-    await logrosStore.getLogrosCompletados(); 
   } catch (error) {
     console.log(error);
     Swal.fire({
@@ -60,7 +59,7 @@ const uploadImage = async (file: File, logroId: string, puntos: number) => {
 </script>
 
 <template>
-  <div class="container" v-for="logro in logrosStore.logros" :key="logro.logro_id">
+  <div class="container" v-for="logro in logros" :key="logro.logro_id">
     <AchievementsCard 
       :name="logro.name" 
       :descripcion="logro.descripcion" 
