@@ -37,6 +37,7 @@ const props = defineProps({
         required: true
     },
 })
+const operation = "add"
 
 
 
@@ -50,7 +51,7 @@ const handleFileUpload = (event: Event) =>
     {
         selectedFile.value = target.files[0]
         console.log(props.logroId)
-        props.uploadImage(target.files[0], props.logroId, props.puntos)
+        props.uploadImage(target.files[0], props.logroId, props.puntos, operation)
     }
     
 }

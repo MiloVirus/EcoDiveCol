@@ -17,7 +17,7 @@ defineProps<{
   logros: Logro[];
 }>();
 
-const uploadImage = async (file: File, logroId: string, puntos: number) => {
+const uploadImage = async (file: File, logroId: string, puntos: number, operation: string) => {
   if (!file) return;
 
   try {
@@ -34,6 +34,7 @@ const uploadImage = async (file: File, logroId: string, puntos: number) => {
     formData.append('file', compressedFile);
     formData.append('logro_id', logroId);
     formData.append('puntos', puntos.toString());
+    formData.append('operation', operation)
 
     const response = await axios.post('http://localhost:3000/upload', formData, {
       headers: {
