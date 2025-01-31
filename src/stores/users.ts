@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import { getTokenFromCookies } from "@/utils/cookieUtils";
 import { useLogrosStore } from "./logros";
 
 interface User {
@@ -40,12 +39,7 @@ export const useUsersStore = defineStore('user',
                     try {
                         const response = await axios.post('http://localhost:3000/auth/login', loginUser,{ withCredentials: true}) 
                         console.log('Respuesta del servidor:', response);
-
-                        const token = getTokenFromCookies()
-                        console.log('Token recibido:', token);
-                            this.isAuthenticated = true 
-                            console.log('Login exitoso') 
-                        
+                            this.isAuthenticated = true   
                     } catch (error) {
                         return (error)
                     }

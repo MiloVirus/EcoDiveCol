@@ -6,19 +6,32 @@ import { useUsersStore } from '@/stores/users';
 import { useRewardsStore } from '@/stores/rewards';
 import { useLogrosStore } from '@/stores/logros';
 import { useDiveShopsStore } from '@/stores/diveshops';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 
 const userStore = useUsersStore();
 const rewardsStore = useRewardsStore();
 const logrosStore = useLogrosStore();
 const diveshopStore = useDiveShopsStore();
 
+// Use storeToRefs for reactive store properties
+const { users } = storeToRefs(userStore);
+
+const rewards = computed(() => rewardsStore.rewards);
+const logros = computed(() => logrosStore.logros);
+
 const currentView = ref<'dashboard' | 'misViajes' | 'reclamoDePuntos'>('dashboard');
 
-const name = computed(() => userStore.users[0]?.first_name || '');
-const lastName = computed(() => userStore.users[0]?.last_name || '');
-const email = computed(() => userStore.users[0]?.email || '');
-const puntos = computed(() => userStore.users[0]?.curr_puntos || '');
+// Update computed properties to use the reactive users reference
+const name = computed(() => users.value[0]?.first_name || '');
+const lastName = computed(() => users.value[0]?.last_name || '');
+const email = computed(() => users.value[0]?.email || '');
+const puntos = computed(() => users.value[0]?.curr_puntos || '');
+
+// Debug watcher
+watch(users, (newUsers) => {
+  console.log('Users updated:', newUsers[0]?.curr_puntos);
+}, { deep: true });
 
 onMounted(async () => {
   await userStore.getProfile();
@@ -49,7 +62,7 @@ const viewComponents = {
       </header>
       <section class="tasks">
         <h2 class="section-title">Tasks for Today</h2>
-        <component :is="viewComponents[currentView]" :rewards="rewardsStore.rewards" :logros="logrosStore.logros" />
+        <component :is="viewComponents[currentView]" :rewards="rewards" :logros="logros" />
       </section>
     </main>
   </div>

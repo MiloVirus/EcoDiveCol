@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CashoutCard from './CashoutCard.vue';
+import { useRewardsStore } from '../stores/rewards';
 
 interface Reward {
   reward_id: string;
@@ -7,12 +8,17 @@ interface Reward {
   descripcion: string;
   puntos: 6000;
   diveshop_id: string; 
+  claimed: boolean;
 }
-
 
 defineProps<{
   rewards: Reward[];
 }>();
+
+const rewardsStore = useRewardsStore()
+
+
+
 </script>
 
 <template>
@@ -22,7 +28,9 @@ defineProps<{
     :name="reward.name"
     :descripcion="reward.descripcion"
     :puntos="reward.puntos"
-    :diveshop_id="reward.diveshop_id" />
+    :completado="reward.claimed"
+    :diveshop_id="reward.diveshop_id"
+     />
   </div>
 </template>
 

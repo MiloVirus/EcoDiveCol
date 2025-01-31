@@ -3,6 +3,8 @@ import AchievementsCard from './AchievementsCard.vue';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
+import { useLogrosStore } from '@/stores/logros';
+import { useUsersStore } from '@/stores/users';
 
 interface Logro {
   logro_id: string;
@@ -17,6 +19,9 @@ defineProps<{
   logros: Logro[];
 }>();
 
+const logrosStore = useLogrosStore();
+const userStore = useUsersStore();
+
 const uploadImage = async (file: File, logroId: string, puntos: number, operation: string) => {
   if (!file) return;
 
@@ -28,9 +33,7 @@ const uploadImage = async (file: File, logroId: string, puntos: number, operatio
     };
 
     const compressedFile = await imageCompression(file, options);
-
     const formData = new FormData();
-
     formData.append('file', compressedFile);
     formData.append('logro_id', logroId);
     formData.append('puntos', puntos.toString());
@@ -42,7 +45,15 @@ const uploadImage = async (file: File, logroId: string, puntos: number, operatio
       },
       withCredentials: true,
     });
-    console.log('Image uploaded successfully:', response.data.message);
+
+    const logro = logrosStore.logros.find(l => l.logro_id === logroId);
+    if (logro) {
+      logro.completado = true;
+    }
+
+    if (userStore.users[0]) {
+      userStore.users[0].curr_puntos += puntos;
+    }
 
     Swal.fire({
       icon: 'info',

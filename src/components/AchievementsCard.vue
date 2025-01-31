@@ -59,7 +59,7 @@ const handleFileUpload = (event: Event) =>
 </script>
 
 <template>
-    <div :class="{cardContainerTrue: completado, cardContainerFalse: !completado}" class="cardContainer">
+    <div :class="{cardContainerTrue: completado, cardContainerFalse: !completado}">
         <div class="imageContainer">
             <img class="imageContainer__img" :src="imagen" alt="">
         </div>
