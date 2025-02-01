@@ -3,7 +3,7 @@ import axios from "axios";
 import { useLogrosStore } from "./logros";
 
 interface User {
-    sub: string,
+    user_id: string,
     first_name: string;
     last_name: string,
     email: string,
@@ -88,6 +88,23 @@ export const useUsersStore = defineStore('user',
                     console.log('error')
                 }
             },
+            async modifyUserScore(puntos: number, user_id: string, operation:string)
+            {
+                console.log('modifying user score',puntos, user_id, operation)
+                const user = this.users.find(user => user.user_id === user_id)
+                console.log(user)
+                if (user) {
+                        if(operation === 'add')
+                        {
+                            user.curr_puntos += puntos
+                        }
+                        else if(operation === 'subtract')
+                        {
+                            user.curr_puntos = Math.max(0, user.curr_puntos - puntos);
+                        }
+                    }
+            },
+
             clearProfile()
             {
                 this.users = []

@@ -14,7 +14,6 @@ const rewardsStore = useRewardsStore();
 const logrosStore = useLogrosStore();
 const diveshopStore = useDiveShopsStore();
 
-// Use storeToRefs for reactive store properties
 const { users } = storeToRefs(userStore);
 
 const rewards = computed(() => rewardsStore.rewards);
@@ -22,16 +21,11 @@ const logros = computed(() => logrosStore.logros);
 
 const currentView = ref<'dashboard' | 'misViajes' | 'reclamoDePuntos'>('dashboard');
 
-// Update computed properties to use the reactive users reference
 const name = computed(() => users.value[0]?.first_name || '');
 const lastName = computed(() => users.value[0]?.last_name || '');
 const email = computed(() => users.value[0]?.email || '');
 const puntos = computed(() => users.value[0]?.curr_puntos || '');
 
-// Debug watcher
-watch(users, (newUsers) => {
-  console.log('Users updated:', newUsers[0]?.curr_puntos);
-}, { deep: true });
 
 onMounted(async () => {
   await userStore.getProfile();
