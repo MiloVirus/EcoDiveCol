@@ -19,7 +19,7 @@ interface ExistingUser {
 export const useUsersStore = defineStore('user',
     {
         state: () => ({
-            users: [] as User[],
+            users: [] as User[] | null,
             isAuthenticated : false,
             loading: false,
             error: null as string | null,
@@ -55,7 +55,7 @@ export const useUsersStore = defineStore('user',
                     });
                     this.isAuthenticated = false;
                     console.log('logout successful')
-                    this.users = []
+                    this.users = null
                     logrosStore.clearLogros()
                 } catch (error) {
                     console.log(error)
@@ -69,19 +69,26 @@ export const useUsersStore = defineStore('user',
                         withCredentials: true
                     })
                     this.isAuthenticated = response.data.isAuthenticated
-                    console.log(response.data)
+                    if (!this.isAuthenticated) {
+                        this.users = null
+                    } else if (!this.users) {
+                        await this.getProfile()
+                    }
                     
                 } catch (error) {
-                    console.log('error')
+                    this.isAuthenticated = false
+                    this.users = null
+                    return false
                 }
             },
             async getProfile()
+
             {
                 try {
                     const response = await axios.get('http://localhost:3000/auth/profile',{
                         withCredentials: true
                     })
-                    this.users.push(response.data)
+                    this.users = [response.data]
                     console.log(response.data)
                     
                 } catch (error) {
@@ -91,9 +98,14 @@ export const useUsersStore = defineStore('user',
             async modifyUserScore(puntos: number, user_id: string, operation:string)
             {
                 console.log('modifying user score',puntos, user_id, operation)
+                if (!this.users) {
+                    console.log('No users found')
+                    return
+                }
                 const user = this.users.find(user => user.user_id === user_id)
                 console.log(user)
                 if (user) {
+
                         if(operation === 'add')
                         {
                             user.curr_puntos += puntos

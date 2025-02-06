@@ -28,8 +28,12 @@ const logOut = async () => {
 };
 
 const updateView = (view: string) => {
-  activeLink.value = view; // Actualizar el enlace activo
-  emit('updateView', view);
+  activeLink.value = view;
+  if (view === 'home') {
+    router.push({ name: 'home' });
+  } else {
+    emit('updateView', view);
+  }
 };
 </script>
 
@@ -54,6 +58,10 @@ const updateView = (view: string) => {
          class="menu-item" 
          :class="{ active: activeLink === 'reclamoDePuntos' }" 
          @click.prevent="updateView('reclamoDePuntos')">Reclamo de puntos</a>
+         <a href="#" 
+         class="menu-item" 
+         :class="{ active: activeLink === 'home' }" 
+         @click.prevent="updateView('home')">Home</a>
     </nav>
     <button @click="logOut" class="logout-button">Log out</button>
   </aside>

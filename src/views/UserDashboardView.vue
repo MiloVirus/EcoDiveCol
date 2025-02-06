@@ -21,10 +21,10 @@ const logros = computed(() => logrosStore.logros);
 
 const currentView = ref<'dashboard' | 'misViajes' | 'reclamoDePuntos'>('dashboard');
 
-const name = computed(() => users.value[0]?.first_name || '');
-const lastName = computed(() => users.value[0]?.last_name || '');
-const email = computed(() => users.value[0]?.email || '');
-const puntos = computed(() => users.value[0]?.curr_puntos || '');
+const name = computed(() => users.value?.[0]?.first_name || '');
+const lastName = computed(() => users.value?.[0]?.last_name || '');
+const email = computed(() => users.value?.[0]?.email || '');
+const puntos = computed(() => users.value?.[0]?.curr_puntos || '');
 
 
 onMounted(async () => {
