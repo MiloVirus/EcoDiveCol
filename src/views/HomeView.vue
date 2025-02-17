@@ -1,18 +1,40 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
+import { useDiveShopsStore } from '@/stores/diveshops';
+import DiveshopCard from '@/components/DiveshopCard.vue';
+import diveShopImage from '../assets/img/diveshop.jpg';
+
 const searchQuery = ref('');
-const searchResult = ref('');
+const selectedCity = ref('');
+const diveShopsStore = useDiveShopsStore();
 
-const handleSearch = () => {
-  if (searchQuery.value.trim() !== '') {
-    searchResult.value = `Searching for diving centers related to: ${searchQuery.value}`;
+const cities = ref(['Cali', 'Bogotá', 'Medellín']); 
 
-  } else {
-    searchResult.value = '';
+onMounted(async () => {
+  await diveShopsStore.getDiveShops();
+});
+
+const diveShops = computed(() => diveShopsStore.diveshops || []);
+
+const filteredDiveshops = computed(() => {
+  let filtered = diveShops.value;
+
+  if (searchQuery.value) {
+    filtered = filtered.filter((diveshop) => {
+      return diveshop.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+    });
   }
-};
+
+  if (selectedCity.value) {
+    filtered = filtered.filter((diveshop) => {
+      return diveshop.city.toLowerCase().includes(selectedCity.value.toLowerCase());
+    });
+  }
+
+  return filtered;
+});
 </script>
 
 <template>
@@ -20,15 +42,24 @@ const handleSearch = () => {
   <div class="diving-search">
     <h1>Encuentra un centro de buceo sostenible</h1>
     <div class="search-container">
-
-      <input type="text" v-model="searchQuery" @input="handleSearch" placeholder="Search for diving centers...">
+      <input type="text" v-model="searchQuery" placeholder="Search for diving centers...">
+      <select v-model="selectedCity">
+        <option value="">Select a city</option>
+        <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
+      </select>
       <button @click="handleSearch">Search</button>
     </div>
-    <p v-if="searchResult" class="search-result">{{ searchResult }}</p>
+    <div class="search-result">
+        <div v-for="diveshop in filteredDiveshops" :key="diveshop.id" class="diveshop-card">
+          <DiveshopCard 
+          :name="diveshop.name" 
+          :city="diveshop.city" 
+          :image="diveShopImage" />
+        </div>
+    </div>
   </div>
   <Footer />
 </template>
-
 
 <style>
 .diving-search {
@@ -54,10 +85,13 @@ h1 {
   display: flex;
   width: 80%;
   max-width: 600px;
-
+}
+.diveshop-card
+{
+  margin: 10px;
 }
 
-input {
+input, select {
   flex-grow: 1;
   padding: 10px;
   font-size: 1rem;
@@ -81,6 +115,13 @@ button:hover {
 }
 
 .search-result {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-top: 20px;
   font-size: 1.2rem;
   text-align: center;

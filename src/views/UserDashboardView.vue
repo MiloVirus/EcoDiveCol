@@ -5,14 +5,12 @@ import Sidebar from '@/components/Sidebar.vue';
 import { useUsersStore } from '@/stores/users';
 import { useRewardsStore } from '@/stores/rewards';
 import { useLogrosStore } from '@/stores/logros';
-import { useDiveShopsStore } from '@/stores/diveshops';
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, onMounted, computed} from 'vue';
 import { storeToRefs } from 'pinia';
 
 const userStore = useUsersStore();
 const rewardsStore = useRewardsStore();
 const logrosStore = useLogrosStore();
-const diveshopStore = useDiveShopsStore();
 
 const { users } = storeToRefs(userStore);
 
@@ -31,7 +29,6 @@ onMounted(async () => {
   await userStore.getProfile();
   await rewardsStore.getRewards();
   await logrosStore.getLogrosCompletados();
-  await diveshopStore.getDiveShops();
 });
 
 const updateView = (view: 'dashboard' | 'misViajes' | 'reclamoDePuntos') => {
