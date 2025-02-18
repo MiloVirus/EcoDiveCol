@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useUsersStore } from '../stores/users';
 import router from '@/router';
-import { defineEmits, ref } from 'vue';
+import { ref } from 'vue';
 
 const store = useUsersStore();
 const emit = defineEmits(['updateView']);
@@ -60,6 +60,10 @@ const updateView = (view: string) => {
          @click.prevent="updateView('reclamoDePuntos')">Reclamo de puntos</a>
          <a href="#" 
          class="menu-item" 
+         :class="{ active: activeLink === 'centrosDeBuceo' }" 
+         @click.prevent="updateView('centrosDeBuceo')">Centros de Buceo</a>
+         <a href="#" 
+         class="menu-item" 
          :class="{ active: activeLink === 'home' }" 
          @click.prevent="updateView('home')">Home</a>
     </nav>
@@ -73,6 +77,8 @@ const updateView = (view: string) => {
     background-color: #2c2c2c;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: 100vh;
 }
 
 .user-avatar {

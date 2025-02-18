@@ -37,7 +37,15 @@ export const useLogrosStore = defineStore('logros',
                 const userStore = useUsersStore()
                 try {
                     await this.getLogrosCompletados()
-                    userStore.users[0].curr_puntos = userStore.users[0].curr_puntos + puntos
+                    if (userStore.users && userStore.users.length > 0) {
+                        if (userStore.users[0]) {
+                            userStore.users[0].curr_puntos = (userStore.users[0].curr_puntos ?? 0) + puntos;
+                        } else {
+                            console.log('First user is undefined');
+                        }
+                    } else {
+                        console.log('No users found in userStore')
+                    }
                 } catch (error) {
                     console.log(error)
                     return error

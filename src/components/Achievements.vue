@@ -51,7 +51,7 @@ const uploadImage = async (file: File, logroId: string, puntos: number, operatio
       logro.completado = true;
     }
 
-    if (userStore?.users && userStore.users[0]) {
+    if (userStore?.users && userStore.users[0] && userStore.users[0].curr_puntos !== undefined) {
       userStore.users[0].curr_puntos += puntos;
     }
 

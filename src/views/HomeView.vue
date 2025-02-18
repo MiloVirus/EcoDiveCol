@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import NavBar from '../components/NavBar.vue';
-import Footer from '../components/Footer.vue';
+import NavBar from '@/components/NavBar.vue';
+import Footer from '@/components/Footer.vue';
 import { useDiveShopsStore } from '@/stores/diveshops';
-import DiveshopCard from '@/components/DiveshopCard.vue';
+import DiveshopCard from '../components/DiveshopCard.vue';
 import diveShopImage from '../assets/img/diveshop.jpg';
 
 const searchQuery = ref('');
@@ -38,37 +38,42 @@ const filteredDiveshops = computed(() => {
 </script>
 
 <template>
-  <NavBar />
-  <div class="diving-search">
-    <h1>Encuentra un centro de buceo sostenible</h1>
-    <div class="search-container">
-      <input type="text" v-model="searchQuery" placeholder="Search for diving centers...">
-      <select v-model="selectedCity">
-        <option value="">Select a city</option>
-        <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
-      </select>
-      <button @click="handleSearch">Search</button>
+  <div class="home-container">
+    <NavBar />
+    <div class="diving-search">
+      <h1>Encuentra un centro de buceo sostenible</h1>
+      <div class="search-container">
+        <input type="text" v-model="searchQuery" placeholder="Search for diving centers...">
+        <select v-model="selectedCity">
+          <option value="">Select a city</option>
+          <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
+        </select>
+        <button >Search</button>
+      </div>
+      <div class="search-result">
+          <div v-for="diveshop in filteredDiveshops" :key="diveshop.diveshop_id" class="diveshop-card">
+            <DiveshopCard 
+            :name="diveshop.name" 
+            :city="diveshop.city" 
+            :image="diveShopImage" />
+          </div>
+      </div>
     </div>
-    <div class="search-result">
-        <div v-for="diveshop in filteredDiveshops" :key="diveshop.id" class="diveshop-card">
-          <DiveshopCard 
-          :name="diveshop.name" 
-          :city="diveshop.city" 
-          :image="diveShopImage" />
-        </div>
-    </div>
+    <Footer />
   </div>
-  <Footer />
 </template>
 
 <style>
+.home-container
+{
+  height: 100vh;
+}
 .diving-search {
   font-family: 'Montserrat', serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   background-image: url('https://images.unsplash.com/photo-1682687982501-1e58ab814714');
   background-size: cover;
   background-position: center;

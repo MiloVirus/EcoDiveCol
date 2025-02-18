@@ -2,22 +2,25 @@
 import Achievements from '@/components/Achievements.vue';
 import PointsCashout from '@/components/PointsCashout.vue';
 import Sidebar from '@/components/Sidebar.vue';
+import CentrosDeBuceo from '@/components/CentrosDeBuceo.vue';
 import { useUsersStore } from '@/stores/users';
 import { useRewardsStore } from '@/stores/rewards';
 import { useLogrosStore } from '@/stores/logros';
+import { useDiveShopsStore } from '@/stores/diveshops';
 import { ref, onMounted, computed} from 'vue';
 import { storeToRefs } from 'pinia';
 
 const userStore = useUsersStore();
 const rewardsStore = useRewardsStore();
 const logrosStore = useLogrosStore();
+const diveshopStore = useDiveShopsStore();
 
 const { users } = storeToRefs(userStore);
 
 const rewards = computed(() => rewardsStore.rewards);
 const logros = computed(() => logrosStore.logros);
 
-const currentView = ref<'dashboard' | 'misViajes' | 'reclamoDePuntos'>('dashboard');
+const currentView = ref<'dashboard' | 'misViajes' | 'reclamoDePuntos' | 'centrosDeBuceo'>('dashboard');
 
 const name = computed(() => users.value?.[0]?.first_name || '');
 const lastName = computed(() => users.value?.[0]?.last_name || '');
@@ -29,9 +32,10 @@ onMounted(async () => {
   await userStore.getProfile();
   await rewardsStore.getRewards();
   await logrosStore.getLogrosCompletados();
+  await diveshopStore.getUserDiveshops();
 });
 
-const updateView = (view: 'dashboard' | 'misViajes' | 'reclamoDePuntos') => {
+const updateView = (view: 'dashboard' | 'misViajes' | 'reclamoDePuntos' | 'centrosDeBuceo') => {
   currentView.value = view;
 };
 
@@ -39,13 +43,14 @@ const viewComponents = {
   dashboard: Achievements,
   misViajes: Achievements, 
   reclamoDePuntos: PointsCashout,
+  centrosDeBuceo: CentrosDeBuceo
+  
 };
 </script>
 
 <template>
   <div class="dashboard-container">
     <Sidebar :name="name" :lastName="lastName" :email="email" @updateView="updateView" />
-
     <main class="main-content">
       <header class="header">
         <h1 class="welcome-message">Hello, {{ name }}</h1>
@@ -71,6 +76,7 @@ const viewComponents = {
 .main-content {
     flex: 1;
     padding: 20px;
+    margin-left: 20%;
 }
 
 .header {

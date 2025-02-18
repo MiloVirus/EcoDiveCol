@@ -3,12 +3,12 @@ import axios from "axios";
 import { useLogrosStore } from "./logros";
 
 interface User {
-    user_id: string,
+    user_id?: string,
     first_name: string;
     last_name: string,
     email: string,
     password: string,
-    curr_puntos: number,
+    curr_puntos?: number,
 }
 
 interface ExistingUser {
@@ -106,11 +106,11 @@ export const useUsersStore = defineStore('user',
                 console.log(user)
                 if (user) {
 
-                        if(operation === 'add')
+                        if(operation === 'add' && user.curr_puntos)
                         {
                             user.curr_puntos += puntos
                         }
-                        else if(operation === 'subtract')
+                        else if(operation === 'subtract' && user.curr_puntos)
                         {
                             user.curr_puntos = Math.max(0, user.curr_puntos - puntos);
                         }
