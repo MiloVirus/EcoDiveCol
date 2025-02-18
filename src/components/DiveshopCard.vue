@@ -4,32 +4,37 @@
     <div class="card-content">
       <h2 class="card-title">{{ name }}</h2>
       <p class="card-city">{{ city }}</p>
-      <button class="card-button">Learn More</button>
+      <button class="card-button" @click="navigateToDiveShop">Learn More</button>
       <button v-if="userAuth && !favorite" @click="diveShop.setDiveshopFavorite(props.id)" class="card-button">Add to Favorites</button>
-      <button v-if="userAuth && favorite === true" @click="diveShop.setDiveshopFavorite(props.id)" class="card-button-remove">Remove from favorites</button>
+      <button v-if="userAuth && favorite === true" @click="diveShop.unSetFavoriteDiveShop(props.id)" class="card-button-remove">Remove from favorites</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
+import { useRouter } from 'vue-router';
 import { useDiveShopsStore } from '@/stores/diveshops';
 
-const diveShop = useDiveShopsStore()
+const diveShop = useDiveShopsStore();
+const router = useRouter();
 
 const props = defineProps<{
-    name: string;
-    city: string;
-    image: string;
-    userAuth?: boolean;
-    favorite?: boolean;
-    id: string;
+  name: string;
+  city: string;
+  image: string;
+  userAuth?: boolean;
+  favorite?: boolean;
+  id: string;
 }>();
+
+const navigateToDiveShop = () => {
+  router.push({ name: 'DiveShop', params: { id: props.id } });
+};
 </script>
 
 <style scoped>
 .card {
-  border: 1px solid #ddd;
   background-color: #eceaea;
   color: #333;
   border-radius: 8px;
@@ -83,6 +88,7 @@ const props = defineProps<{
   transition: background-color 0.3s ease;
   align-self: center;
 }
+
 .card-button-remove {
   margin-top: 8px;
   padding: 8px 16px;
@@ -94,6 +100,7 @@ const props = defineProps<{
   transition: background-color 0.3s ease;
   align-self: center;
 }
+
 .card-button:hover {
   background-color: #0056b3;
 }

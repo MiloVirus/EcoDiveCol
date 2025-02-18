@@ -3,8 +3,8 @@ import { ref, computed, onMounted } from 'vue';
 import NavBar from '@/components/NavBar.vue';
 import Footer from '@/components/Footer.vue';
 import { useDiveShopsStore } from '@/stores/diveshops';
-import DiveshopCard from '../components/DiveshopCard.vue';
-import diveShopImage from '../assets/img/diveshop.jpg';
+import DiveshopCard from '@/components/DiveShopCard.vue';
+
 
 const searchQuery = ref('');
 const selectedCity = ref('');
@@ -53,9 +53,10 @@ const filteredDiveshops = computed(() => {
       <div class="search-result">
           <div v-for="diveshop in filteredDiveshops" :key="diveshop.diveshop_id" class="diveshop-card">
             <DiveshopCard 
+            :id="diveshop.diveshop_id"
             :name="diveshop.name" 
             :city="diveshop.city" 
-            :image="diveShopImage" />
+            :image="diveshop.image" />
           </div>
       </div>
     </div>
@@ -66,11 +67,13 @@ const filteredDiveshops = computed(() => {
 <style>
 .home-container
 {
+  
   height: 100vh;
 }
 .diving-search {
   font-family: 'Montserrat', serif;
   display: flex;
+  min-height: 100vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;

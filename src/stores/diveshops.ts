@@ -55,6 +55,16 @@ export const useDiveShopsStore = defineStore("diveshops", {
         console.log(error);
       }
     },
+    async unSetFavoriteDiveShop(diveShopId: string)
+    {
+      const response = await axios.delete(`http://localhost:3000/diveshops/unsetFavorite`, { data: { diveShopId }, withCredentials: true })
+      console.log(response)
+      const updatedDiveShop = this.userDiveshops.find(diveshop => diveshop.diveshop_id === diveShopId);
+      if (updatedDiveShop) {
+        updatedDiveShop.favorite = false;
+      }
+    },
+
     clearDiveShops() {
       this.diveshops = [];
     },

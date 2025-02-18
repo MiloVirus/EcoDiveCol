@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import DiveShop from '@/views/DiveShop.vue';
 import { useUsersStore } from '@/stores/users'; 
 
 const router = createRouter({
@@ -30,6 +31,12 @@ const router = createRouter({
       name: 'dashboard',
       component: () => import('../views/UserDashboardView.vue'),
       meta: { requiresAuth: true },  
+    },
+    {
+      path: '/diveshop/:id',
+      name: 'DiveShop',
+      component: DiveShop,
+      props: true,
     },
   ],
 });
