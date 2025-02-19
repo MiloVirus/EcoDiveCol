@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { useDiveShopsStore } from '@/stores/diveshops';
-import DiveshopCard from '@/components/DiveShopCard.vue';
+import DiveshopCard from '@/components/DiveshopCard.vue';
 import {computed, ref} from 'vue'
 
 const diveShopsStore = useDiveShopsStore();
