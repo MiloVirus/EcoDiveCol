@@ -1,51 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import { useUsersStore } from '@/stores/users';
+import HomeView from '@/views/HomeView.vue';
+import LoginView from '@/views/LoginView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import UserDashboardView from '@/views/UserDashboardView.vue';
 import DiveShop from '@/views/DiveShop.vue';
-import { useUsersStore } from '@/stores/users'; 
+
+const routes = [
+  { path: '/', name: 'home', component: HomeView },
+  { path: '/login', name: 'login', component: LoginView },
+  { path: '/register', name: 'register', component: RegisterView },
+  { path: '/dashboard', name: 'dashboard', component: UserDashboardView, meta: { requiresAuth: true } },
+  { path: '/diveshop/:id', name: 'DiveShop', component: DiveShop, props: true },
+];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue'),
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/LoginView.vue'),
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('../views/RegisterView.vue'),
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: () => import('../views/UserDashboardView.vue'),
-      meta: { requiresAuth: true },  
-    },
-    {
-      path: '/diveshop/:id',
-      name: 'DiveShop',
-      component: DiveShop,
-      props: true,
-    },
-  ],
+  routes,
 });
-
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useUsersStore();
   await authStore.checkAuth();
-
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!authStore.isAuthenticated) {
@@ -53,7 +29,7 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
-  if (to.name && ['login', 'register'].includes(to.name as string)) {
+  if (to.name && ['login', 'register',].includes(to.name as string)) {
     if (authStore.isAuthenticated) {
       return next({ name: 'dashboard' });
     }

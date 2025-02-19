@@ -73,7 +73,7 @@ const updateView = (view: string) => {
 
 <style lang="scss" scoped>
 .sidebar {
-    width: 20%;
+    width: 100%;
     background-color: #2c2c2c;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);

@@ -1,32 +1,51 @@
 <script setup lang="ts">
-import { RouterLink} from 'vue-router'
+import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
-import {useUsersStore} from '../stores/users'
+import { useUsersStore } from '../stores/users';
+import Swal from 'sweetalert2';
 
-const store = useUsersStore()
+const store = useUsersStore();
 
-const name = ref<string>('')
-const lastName = ref<string>('')
-const email = ref<string>('')
-const password = ref<string>('')
+const name = ref<string>('');
+const lastName = ref<string>('');
+const email = ref<string>('');
+const password = ref<string>('');
 
-const handleRegister = (e:Event) =>
-{
-    e.preventDefault()
-
-    store.addUser({
+const handleRegister = async (e: Event) => {
+    e.preventDefault();
+    try {
+        await store.addUser({
         first_name: name.value,
         last_name: lastName.value,
         email: email.value,
         password: password.value,
+        
     });
-    
-    name.value = ('')
-    lastName.value = ('')
-    email.value = ('')
-    password.value = ('') 
-}
 
+    name.value = '';
+    lastName.value = '';
+    email.value = '';
+    password.value = '';
+
+    Swal.fire({
+        title: 'Registro exitoso',
+        text: 'Usuario registrado correctamente',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+    });
+ 
+    } catch (error) {
+        console.log('Registration failed', error);
+        Swal.fire({
+            title: 'Error',
+            text: 'No se pudo registrar el usuario',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
+    }
+
+    
+};
 </script>
 
 <template>
@@ -37,34 +56,33 @@ const handleRegister = (e:Event) =>
         <div class="mainLoginContainer">
             <div class="mainLoginContainer__logoContainer">
                 <img class="logoContainer__logo" src="../assets/img/ecodivecol-white.png" alt="logo">
+                <a href="/">Home</a>
             </div>
             <section class="loginContainer">
-                    <h1>
-                        Registrate a nuestra aplicación
-                    </h1>
-                    <h4>Por favor ingresa tus datos</h4>
-                    <form class="loginContainer__form">
-                        <label for="form__label" class="form__label">Nombre</label>
-                        <input id="form__input" v-model="name" type="text">
-                        <label for="form__label" class="form__label">Apellido</label>
-                        <input id="form__input" v-model="lastName" type="text">
-                        <label for="form__label" class="form__label">Correo Electrónico</label>
-                        <input id="form__input" v-model="email" type="text">
-                        <label for="form__label" class="form__label">Password</label>
-                        <input id="form__input" v-model="password" type="password">
-                        <button @click="handleRegister" class="form__button">Register</button>
-                    </form>
-                    <RouterLink to="/login"><h5>¿Ya tienes una cuenta?</h5></RouterLink>
+                <h1>Registrate a nuestra aplicación</h1>
+                <h4>Por favor ingresa tus datos</h4>
+                <form class="loginContainer__form" @submit="handleRegister">
+                    <label for="name" class="form__label">Nombre</label>
+                    <input id="name" v-model="name" type="text" required>
+                    <label for="lastName" class="form__label">Apellido</label>
+                    <input id="lastName" v-model="lastName" type="text" required>
+                    <label for="email" class="form__label">Correo Electrónico</label>
+                    <input id="email" v-model="email" type="text" required>
+                    <label for="password" class="form__label">Password</label>
+                    <input id="password" v-model="password" type="password" required>
+                    <button type="submit" class="form__button">Register</button>
+                </form>
+                <RouterLink to="/login"><h5>¿Ya tienes una cuenta?</h5></RouterLink>
             </section>
         </div>
     </section>
-
 </template>
 <style lang="scss" scoped>
 .mainContainer {
     display: flex;
     flex-wrap: nowrap;
     width: 100vw;
+    height:100vh;
     font-family: 'Montserrat', serif;
 }
 
@@ -83,6 +101,13 @@ h1
 {
     text-align: center;
 }
+
+a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-right: 20px;
+}
 .mainLoginContainer {
     width: 50%;
     background-color: blueviolet;
@@ -98,6 +123,12 @@ h1
     justify-content: center;
     width: 100%;
     height: 90%;
+}
+.mainLoginContainer__logoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
 }
 
 .loginContainer__logoContainer {
@@ -133,6 +164,7 @@ h5 {
 .form__label,
 h4 {
     font-weight: 500;
+    padding:5px;
 }
 
 #form__input {
@@ -159,5 +191,13 @@ h4 {
 
 .form__button:hover {
     background-color: #340e57;
+}
+@media (max-width: 768px) {
+    .imageContainer {
+        display: none;
+    }
+    .mainLoginContainer {
+        width: 100%;
+    }
 }
 </style>

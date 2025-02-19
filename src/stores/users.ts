@@ -16,13 +16,14 @@ interface ExistingUser {
     password: string
 }
 
-export const useUsersStore = defineStore('user',
+export const useUsersStore = defineStore('users',
     {
         state: () => ({
             users: [] as User[] | null,
             isAuthenticated : false,
             loading: false,
             error: null as string | null,
+            user: null,
         }),
         actions:
         {
@@ -57,6 +58,7 @@ export const useUsersStore = defineStore('user',
                     console.log('logout successful')
                     this.users = null
                     logrosStore.clearLogros()
+                    this.user = null;
                 } catch (error) {
                     console.log(error)
                 }
@@ -74,10 +76,11 @@ export const useUsersStore = defineStore('user',
                     } else if (!this.users) {
                         await this.getProfile()
                     }
-                    
+                    this.user = response.data.user;
                 } catch (error) {
                     this.isAuthenticated = false
                     this.users = null
+                    this.user = null;
                     return false
                 }
             },

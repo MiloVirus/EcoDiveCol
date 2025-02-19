@@ -19,9 +19,6 @@ const handleLogin = async (e: Event) => {
     } catch (error) {
         console.log(error)
     }
-
-
-
 }
 
 </script>
@@ -34,6 +31,7 @@ const handleLogin = async (e: Event) => {
         <div class="mainLoginContainer">
             <div class="mainLoginContainer__logoContainer">
                 <img class="logoContainer__logo" src="../assets/img/ecodivecol-white.png" alt="logo">
+                <a href="/">Home</a>
             </div>
             <section class="loginContainer">
                 <h1>
@@ -60,6 +58,8 @@ const handleLogin = async (e: Event) => {
     display: flex;
     flex-wrap: nowrap;
     width: 100vw;
+    height: 100vh;
+    font-family: 'Montserrat', serif;
 }
 
 .imageContainer {
@@ -82,7 +82,19 @@ a {
     width: 50%;
     background-color: rgb(134, 45, 218);
 }
+.mainLoginContainer__logoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
 
+a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-right: 20px;
+}
 h1 {
     text-align: center;
 }
@@ -156,5 +168,13 @@ h4 {
 
 .form__button:hover {
     background-color: #340e57;
+}
+@media (max-width: 768px) {
+    .imageContainer {
+        display: none;
+    }
+    .mainLoginContainer {
+        width: 100%;
+    }
 }
 </style>
