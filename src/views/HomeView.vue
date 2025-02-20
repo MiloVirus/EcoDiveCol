@@ -48,7 +48,6 @@ const filteredDiveshops = computed(() => {
           <option value="">Select a city</option>
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
-        <button >Search</button>
       </div>
       <div class="search-result">
           <div v-for="diveshop in filteredDiveshops" :key="diveshop.diveshop_id" class="diveshop-card">
@@ -93,6 +92,7 @@ h1 {
 
 .search-container {
   display: flex;
+  flex-wrap: wrap;
   width: 80%;
   max-width: 600px;
 }
@@ -135,5 +135,23 @@ button:hover {
   margin-top: 20px;
   font-size: 1.2rem;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  input,
+  select {
+    width: 100%;
+  }
+  h1{
+    padding: 5px;
+    text-align: center;
+    font-size: 1.5rem;
+  }
 }
 </style>

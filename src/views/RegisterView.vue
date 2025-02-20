@@ -80,10 +80,10 @@ const handleRegister = async (e: Event) => {
 <style lang="scss" scoped>
 .mainContainer {
     display: flex;
-    flex-wrap: nowrap;
     width: 100vw;
-    height:100vh;
+    height: 100vh;
     font-family: 'Montserrat', serif;
+    overflow: hidden;
 }
 
 .imageContainer {
@@ -97,33 +97,25 @@ const handleRegister = async (e: Event) => {
     height: 100%; 
     object-fit: cover; 
 }
-h1
-{
-    text-align: center;
-}
 
-a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    margin-right: 20px;
-}
 .mainLoginContainer {
     width: 50%;
     background-color: blueviolet;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: auto;
 }
 
-.loginContainer
-{
+.loginContainer {
     display: flex;
-    align-items: center;
-    align-self: center;
     flex-direction: column;
-    font-family: 'Montserrat', serif;
     justify-content: center;
+    align-items: center;
+    flex: 1; 
     width: 100%;
-    height: 90%;
 }
+
 .mainLoginContainer__logoContainer {
     display: flex;
     justify-content: space-between;
@@ -131,25 +123,20 @@ a {
     padding: 20px;
 }
 
-.loginContainer__logoContainer {
-    height: 30px;
-}
-
 .logoContainer__logo {
-    text-align: left;
     width: 240px;
-    margin-bottom: 140px;
-    margin: 10px 10px 10px 10px;
+    margin: 10px;
 }
 
 h1 {
     color: white;
     font-size: 34px;
+    text-align: center;
 }
 
 h5 {
     font-weight: 500;
-    text-decoration: underline
+    text-decoration: underline;
 }
 
 .loginContainer__form {
@@ -164,27 +151,14 @@ h5 {
 .form__label,
 h4 {
     font-weight: 500;
-    padding:5px;
-}
-
-#form__input {
-    width: 100%;
-    height: 40px;
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #ccc;
-    box-sizing: border-box;
-    margin: 10px 0 10px 0;
-    color: rgb(99, 99, 99);
-    font-family: 'Montserrat';
+    padding: 5px;
 }
 
 .form__button {
-    padding: 8px;
+    padding: 13px;
     color: white;
     background-color: #551a8b;
     border: none;
-    padding: 13px;
     cursor: pointer;
     font-weight: 700;
 }
@@ -192,12 +166,16 @@ h4 {
 .form__button:hover {
     background-color: #340e57;
 }
+
 @media (max-width: 768px) {
     .imageContainer {
         display: none;
     }
     .mainLoginContainer {
         width: 100%;
+    }
+    h1 {
+        font-size: 1.5rem;
     }
 }
 </style>

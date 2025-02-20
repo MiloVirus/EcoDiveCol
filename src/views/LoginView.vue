@@ -56,20 +56,16 @@ const handleLogin = async (e: Event) => {
 <style lang="scss" scoped>
 .mainContainer {
     display: flex;
-    flex-wrap: nowrap;
     width: 100vw;
     height: 100vh;
     font-family: 'Montserrat', serif;
+    overflow: hidden;
 }
 
 .imageContainer {
     width: 60%;
     height: 100vh;
     overflow: hidden;
-}
-
-a {
-    text-decoration: none;
 }
 
 .backgroundImg {
@@ -81,7 +77,21 @@ a {
 .mainLoginContainer {
     width: 50%;
     background-color: rgb(134, 45, 218);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: auto;  /* <-- Se agrega scroll si el contenido es demasiado grande */
 }
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;  /* <-- Permite que el contenedor crezca sin exceder 100vh */
+    width: 100%;
+}
+
 .mainLoginContainer__logoContainer {
     display: flex;
     justify-content: space-between;
@@ -89,46 +99,20 @@ a {
     padding: 20px;
 }
 
-a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    margin-right: 20px;
-}
-h1 {
-    text-align: center;
-}
-
-.loginContainer {
-    display: flex;
-    align-items: center;
-    align-self: center;
-    flex-direction: column;
-    font-family: 'Montserrat', serif;
-    justify-content: center;
-    width: 100%;
-    height: 90%;
-}
-
-.loginContainer__logoContainer {
-    height: 30px;
-}
-
 .logoContainer__logo {
-    text-align: left;
     width: 240px;
-    margin-bottom: 140px;
-    margin: 10px 10px 10px 10px;
+    margin: 10px;
 }
 
 h1 {
     color: white;
     font-size: 34px;
+    text-align: center;
 }
 
 h5 {
     font-weight: 500;
-    text-decoration: underline
+    text-decoration: underline;
 }
 
 .loginContainer__form {
@@ -157,11 +141,10 @@ h4 {
 }
 
 .form__button {
-    padding: 8px;
+    padding: 13px;
     color: white;
     background-color: #551a8b;
     border: none;
-    padding: 13px;
     cursor: pointer;
     font-weight: 700;
 }
@@ -169,6 +152,7 @@ h4 {
 .form__button:hover {
     background-color: #340e57;
 }
+
 @media (max-width: 768px) {
     .imageContainer {
         display: none;
@@ -177,4 +161,5 @@ h4 {
         width: 100%;
     }
 }
+
 </style>
