@@ -5,7 +5,6 @@ import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import UserDashboardView from '@/views/UserDashboardView.vue';
 import DiveShop from '@/views/DiveShop.vue';
-import { createWebHashHistory } from 'vue-router';
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
@@ -15,12 +14,10 @@ const routes = [
   { path: '/diveshop/:id', name: 'DiveShop', component: DiveShop, props: true },
 ];
 
-
 const router = createRouter({
-  history: createWebHashHistory(), 
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
-
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useUsersStore();
