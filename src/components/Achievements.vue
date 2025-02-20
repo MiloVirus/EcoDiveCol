@@ -5,6 +5,8 @@ import imageCompression from 'browser-image-compression';
 import Swal from 'sweetalert2';
 import { useLogrosStore } from '@/stores/logros';
 import { useUsersStore } from '@/stores/users';
+import {API_URL} from '../utils/constant';
+
 
 interface Logro {
   logro_id: string;
@@ -39,7 +41,7 @@ const uploadImage = async (file: File, logroId: string, puntos: number, operatio
     formData.append('puntos', puntos.toString());
     formData.append('operation', operation)
 
-    const response = await axios.post('http://localhost:3000/upload', formData, {
+    const response = await axios.post(`${API_URL}upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

@@ -1,0 +1,1 @@
+export const API_URL = 'https://ecodivecol-backend-production.up.railway.app/'

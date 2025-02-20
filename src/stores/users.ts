@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { useLogrosStore } from "./logros";
+import { API_URL } from "@/utils/constant";
+
 
 interface User {
     user_id?: string,
@@ -29,7 +31,7 @@ export const useUsersStore = defineStore('users',
         {
             async addUser(newUser: User) {
                 try {
-                    await axios.post('http://localhost:3000/users', newUser)
+                    await axios.post(`${API_URL}users`, newUser)
                 } catch (error) {
                     console.log(error)
                     return (error)
@@ -38,7 +40,7 @@ export const useUsersStore = defineStore('users',
             async signIn(loginUser: ExistingUser) {
                 if (loginUser) {
                     try {
-                        const response = await axios.post('http://localhost:3000/auth/login', loginUser,{ withCredentials: true}) 
+                        const response = await axios.post(`${API_URL}auth/login`, loginUser,{ withCredentials: true}) 
                         console.log('Respuesta del servidor:', response);
                             this.isAuthenticated = true   
                     } catch (error) {
@@ -51,7 +53,7 @@ export const useUsersStore = defineStore('users',
             {
                 const logrosStore = useLogrosStore()
                 try {
-                    await axios.post('http://localhost:3000/auth/logout', null, {
+                    await axios.post(`${API_URL}auth/logout`, null, {
                         withCredentials: true,
                     });
                     this.isAuthenticated = false;
@@ -67,7 +69,7 @@ export const useUsersStore = defineStore('users',
             async checkAuth()
             {
                 try {
-                    const response = await axios.get('http://localhost:3000/auth/check',{
+                    const response = await axios.get(`${API_URL}auth/check`,{
                         withCredentials: true
                     })
                     this.isAuthenticated = response.data.isAuthenticated
@@ -88,7 +90,7 @@ export const useUsersStore = defineStore('users',
 
             {
                 try {
-                    const response = await axios.get('http://localhost:3000/auth/profile',{
+                    const response = await axios.get(`${API_URL}auth/profile`,{
                         withCredentials: true
                     })
                     this.users = [response.data]

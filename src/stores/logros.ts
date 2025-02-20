@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from 'axios'
 import { useUsersStore } from './users'	
+import { API_URL } from "@/utils/constant";
 
 interface Logros {
     logro_id:string;
@@ -24,7 +25,7 @@ export const useLogrosStore = defineStore('logros',
             async getLogrosCompletados()
             {
                 try {
-                    const response = await axios.get('http://localhost:3000/logros/completedAchievements', {withCredentials:true})
+                    const response = await axios.get(`${API_URL}logros/completedAchievements`, {withCredentials:true})
                     console.log(response)
                     this.logros = response.data
                 } catch (error) {

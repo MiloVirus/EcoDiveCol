@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from 'axios'
 import { useUsersStore } from './users'
+import { API_URL } from "@/utils/constant";
 
 interface Reward {
     reward_id: string;
@@ -22,7 +23,7 @@ export const useRewardsStore = defineStore('rewards',
         {
             async getRewards() {
                 try {
-                    const response = await axios.get('http://localhost:3000/rewards', { withCredentials: true })
+                    const response = await axios.get(`${API_URL}rewards`, { withCredentials: true })
                     console.log('get Rewards',response)
                     this.rewards = response.data
                 } catch (error) {
@@ -34,7 +35,7 @@ export const useRewardsStore = defineStore('rewards',
                 try {
                     const userStore = useUsersStore();
                     console.log(reward_id);
-                    const response = await axios.post(`http://localhost:3000/rewards/claim`, { reward_id }, { withCredentials: true });
+                    const response = await axios.post(`${API_URL}rewards/claim`, { reward_id }, { withCredentials: true });
                     console.log('claim', response);
 
                     const reward = this.rewards.find(r => r.reward_id === reward_id);
