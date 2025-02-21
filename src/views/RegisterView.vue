@@ -29,7 +29,7 @@ const handleRegister = async (e: Event) => {
         await store.addUser({
             first_name: name.value,
             last_name: lastName.value,
-            email: email.value,
+            email: email.value.toLowerCase(),
             password: password.value,
         });
 
