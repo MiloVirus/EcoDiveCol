@@ -52,10 +52,6 @@ const updateView = (view: string) => {
          @click.prevent="updateView('dashboard')">Dashboard</a>
       <a href="#" 
          class="menu-item" 
-         :class="{ active: activeLink === 'misViajes' }" 
-         @click.prevent="updateView('misViajes')">Mis Viajes</a>
-      <a href="#" 
-         class="menu-item" 
          :class="{ active: activeLink === 'reclamoDePuntos' }" 
          @click.prevent="updateView('reclamoDePuntos')">Reclamo de puntos</a>
          <a href="#" 

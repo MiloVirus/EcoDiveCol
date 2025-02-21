@@ -10,30 +10,43 @@ const name = ref<string>('');
 const lastName = ref<string>('');
 const email = ref<string>('');
 const password = ref<string>('');
+const confirmPassword = ref<string>(''); // Nuevo campo para confirmar contraseña
 
 const handleRegister = async (e: Event) => {
     e.preventDefault();
+
+    if (password.value !== confirmPassword.value) {
+        Swal.fire({
+            title: 'Error',
+            text: 'Las contraseñas no coinciden',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
+        return;
+    }
+
     try {
         await store.addUser({
-        first_name: name.value,
-        last_name: lastName.value,
-        email: email.value,
-        password: password.value,
-        
-    });
+            first_name: name.value,
+            last_name: lastName.value,
+            email: email.value,
+            password: password.value,
+        });
 
-    name.value = '';
-    lastName.value = '';
-    email.value = '';
-    password.value = '';
+        // Limpiar los campos después del registro exitoso
+        name.value = '';
+        lastName.value = '';
+        email.value = '';
+        password.value = '';
+        confirmPassword.value = '';
 
-    Swal.fire({
-        title: 'Registro exitoso',
-        text: 'Usuario registrado correctamente',
-        icon: 'success',
-        confirmButtonText: 'Ok'
-    });
- 
+        Swal.fire({
+            title: 'Registro exitoso',
+            text: 'Usuario registrado correctamente',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+        });
+
     } catch (error) {
         console.log('Registration failed', error);
         Swal.fire({
@@ -43,8 +56,6 @@ const handleRegister = async (e: Event) => {
             confirmButtonText: 'Ok'
         });
     }
-
-    
 };
 </script>
 
@@ -64,12 +75,19 @@ const handleRegister = async (e: Event) => {
                 <form class="loginContainer__form" @submit="handleRegister">
                     <label for="name" class="form__label">Nombre</label>
                     <input id="name" v-model="name" type="text" required>
+
                     <label for="lastName" class="form__label">Apellido</label>
                     <input id="lastName" v-model="lastName" type="text" required>
+
                     <label for="email" class="form__label">Correo Electrónico</label>
                     <input id="email" v-model="email" type="text" required>
+
                     <label for="password" class="form__label">Password</label>
                     <input id="password" v-model="password" type="password" required>
+
+                    <label for="confirmPassword" class="form__label">Confirmar Password</label>
+                    <input id="confirmPassword" v-model="confirmPassword" type="password" required>
+
                     <button type="submit" class="form__button">Register</button>
                 </form>
                 <RouterLink to="/login"><h5>¿Ya tienes una cuenta?</h5></RouterLink>

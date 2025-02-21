@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { useLogrosStore } from "./logros";
 import { API_URL } from "@/utils/constant";
+import Swal from "sweetalert2";
 
 
 interface User {
@@ -44,6 +45,11 @@ export const useUsersStore = defineStore('users',
                         console.log('Respuesta del servidor:', response);
                             this.isAuthenticated = true   
                     } catch (error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Usuario o contraseña incorrectos',
+                        })
                         return (error)
                     }
                 }
@@ -83,7 +89,7 @@ export const useUsersStore = defineStore('users',
                     this.isAuthenticated = false
                     this.users = null
                     this.user = null;
-                    return false
+                   
                 }
             },
             async getProfile()

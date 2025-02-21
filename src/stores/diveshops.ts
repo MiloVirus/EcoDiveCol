@@ -37,7 +37,7 @@ export const useDiveShopsStore = defineStore("diveshops", {
     },
     async getUserDiveshops() {
       try {
-        const response = await axios.get(`${API_URL}user`, { withCredentials: true });
+        const response = await axios.get(`${API_URL}diveshops/user`, { withCredentials: true });
         console.log(response);
         this.userDiveshops = response.data;
       } catch (error) {

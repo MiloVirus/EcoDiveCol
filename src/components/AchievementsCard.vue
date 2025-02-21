@@ -104,7 +104,7 @@ const handleFileUpload = (event: Event) =>
     border: solid 1px rgb(34, 34, 34);;
     padding: 20px;
     background-color: gray;
-    opacity: 60%;
+
 }
 
 .customUploadButton {

@@ -47,7 +47,15 @@ const uploadImage = async (file: File, logroId: string, puntos: number, operatio
       },
       withCredentials: true,
     });
-
+    console.log(response.data);
+    if(response.data.message === "La imagen no cumple los requisitos para el logro :C")
+    {
+      Swal.fire({
+      icon: 'info',
+      title: `${response.data.message}`,
+    });
+      return;
+    }
     const logro = logrosStore.logros.find(l => l.logro_id === logroId);
     if (logro) {
       logro.completado = true;
@@ -89,5 +97,6 @@ const uploadImage = async (file: File, logroId: string, puntos: number, operatio
 <style scoped>
 .container {
   padding: 5px;
+  z-index: -1000;
 }
 </style>

@@ -19,8 +19,8 @@ const { users } = storeToRefs(userStore);
 const rewards = computed(() => rewardsStore.rewards);
 const logros = computed(() => logrosStore.logros);
 
-const currentView = ref<'dashboard' | 'misViajes' | 'reclamoDePuntos' | 'centrosDeBuceo'>('dashboard');
-const isSidebarOpen = ref(false); // Estado para el menú hamburguesa
+const currentView = ref<'dashboard' | 'reclamoDePuntos' | 'centrosDeBuceo'>('dashboard');
+const isSidebarOpen = ref(false); 
 
 const name = computed(() => users.value?.[0]?.first_name || '');
 const lastName = computed(() => users.value?.[0]?.last_name || '');
@@ -34,7 +34,7 @@ onMounted(async () => {
   await diveshopStore.getUserDiveshops();
 });
 
-const updateView = (view: 'dashboard' | 'misViajes' | 'reclamoDePuntos' | 'centrosDeBuceo') => {
+const updateView = (view: 'dashboard' | 'reclamoDePuntos' | 'centrosDeBuceo') => {
   currentView.value = view;
   isSidebarOpen.value = false; // Cierra el menú después de seleccionar una vista
 };
@@ -45,7 +45,6 @@ const toggleSidebar = () => {
 
 const viewComponents = {
   dashboard: Achievements,
-  misViajes: Achievements,
   reclamoDePuntos: PointsCashout,
   centrosDeBuceo: CentrosDeBuceo
 };
