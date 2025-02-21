@@ -81,6 +81,7 @@ const uploadImage = async (file: File, logroId: string, puntos: number, operatio
 </script>
 
 <template>
+  <section><h2>Logros</h2></section>
   <div class="container" v-for="logro in logros" :key="logro.logro_id">
     <AchievementsCard 
       :name="logro.name" 

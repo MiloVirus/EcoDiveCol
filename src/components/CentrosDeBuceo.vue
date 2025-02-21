@@ -1,4 +1,5 @@
 <template>
+  <section><h2>Centros De Buceo</h2></section>
     <div class="head-container">
         <div class="search-container">
         <input type="text" v-model="searchQuery" placeholder="Busca centros de buceo...">

@@ -22,6 +22,7 @@ const rewardsStore = useRewardsStore()
 </script>
 
 <template>
+  <section><h2>Recompensas</h2></section>
   <div class="container" v-for="reward in rewards" :key="reward.reward_id">
     <CashoutCard 
     :reward_id="reward.reward_id"

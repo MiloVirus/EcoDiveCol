@@ -85,10 +85,15 @@ const handleFileUpload = (event: Event) => {
 .cardContainerTrue {
   background-color: gray;
 }
+h1{
+  margin:0;
+  font-size: 2rem;
+}
 
 .customUploadButton {
   display: inline-block;
   padding: 10px 10px;
+  margin: 15px;;
   font-size: 13px;
   color: white;
   background-color: #007bff;
@@ -109,6 +114,7 @@ const handleFileUpload = (event: Event) => {
 .greenCheck img {
   height: 60px;
   width: 60px;
+  margin: 15px;
 }
 
 .imageContainer {

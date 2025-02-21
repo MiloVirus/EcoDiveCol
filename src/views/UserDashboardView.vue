@@ -62,13 +62,12 @@ const viewComponents = {
       <header class="header">
         <h1 class="welcome-message">Bienvenido, {{ name }}</h1>
         <div class="puntosContainer">
-          <h1>{{ puntos }}</h1>
+          <h1 class="puntos">{{ puntos }}</h1>
           <p>Puntos</p>
         </div>
         
       </header>
       <section class="tasks">
-        <h2 class="section-title">Tasks for Today</h2>
         <component :is="viewComponents[currentView]" :rewards="rewards" :logros="logros" />
       </section>
     </main>
@@ -79,7 +78,7 @@ const viewComponents = {
 .dashboard-container {
   display: flex;
   font-family: Arial, sans-serif;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #1a1a1a;
 }
 
@@ -101,8 +100,9 @@ const viewComponents = {
   align-items: center;
   margin-bottom: 20px;
 }
-h1{
+.puntos{
   margin:0;
+  color: rgba(253, 253, 253, 0.877);
 }
 
 .welcome-message {

@@ -46,7 +46,7 @@ const handleLogin = async (e: Event) => {
                     <button class="form__button" @click="handleLogin">Sign In</button>
                 </form>
                 <RouterLink to="/register">
-                    <h5>¿No estás registrado?</h5>
+                    <h4>¿No estás registrado?</h4>
                 </RouterLink>
             </section>
         </div>
@@ -110,7 +110,7 @@ h1 {
     text-align: center;
 }
 
-h5 {
+h4 {
     font-weight: 500;
     text-decoration: underline;
 }

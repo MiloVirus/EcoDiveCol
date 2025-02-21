@@ -3,6 +3,7 @@ import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
 import { useUsersStore } from '../stores/users';
 import Swal from 'sweetalert2';
+import router from '../router';
 
 const store = useUsersStore();
 
@@ -45,6 +46,7 @@ const handleRegister = async (e: Event) => {
             icon: 'success',
             confirmButtonText: 'Ok'
         });
+        router.push('/login');
 
     } catch (error) {
         console.log('Registration failed', error);
@@ -89,7 +91,7 @@ const handleRegister = async (e: Event) => {
 
                     <button type="submit" class="form__button">Register</button>
                 </form>
-                <RouterLink to="/login"><h5>¿Ya tienes una cuenta?</h5></RouterLink>
+                <RouterLink to="/login"><h4>¿Ya tienes una cuenta?</h4></RouterLink>
             </section>
         </div>
     </section>

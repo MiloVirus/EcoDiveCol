@@ -68,6 +68,7 @@ const filteredDiveshops = computed(() => {
 {
   
   height: 100vh;
+  
 }
 .diving-search {
   font-family: 'Montserrat', serif;
@@ -78,10 +79,13 @@ const filteredDiveshops = computed(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url('https://images.unsplash.com/photo-1682687982501-1e58ab814714');
+  background: 
+        linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)), 
+        url('https://images.unsplash.com/photo-1682687982501-1e58ab814714');
   background-size: cover;
   background-position: center;
   color: white;
+ 
 }
 
 h1 {
