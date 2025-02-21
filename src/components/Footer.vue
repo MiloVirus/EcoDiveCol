@@ -6,7 +6,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>About Us</h3>
-                <p>DiveQuest is your gateway to the world's best diving centers.</p>
+                <p>EcoDiveColombia gamificación para buzos.</p>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2023 DiveQuest. All rights reserved.
+            &copy; 2024 EcoDiveColombia. All rights reserved.
         </div>
     </footer>
 </template>

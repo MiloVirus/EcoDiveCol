@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import axios from 'axios'
 import { useUsersStore } from './users'
 import { API_URL } from "@/utils/constant";
+import Swal from "sweetalert2";
 
 interface Reward {
     reward_id: string;
@@ -47,8 +48,17 @@ export const useRewardsStore = defineStore('rewards',
                     {
                         userStore.modifyUserScore(reward.puntos, response.data.user_id, 'subtract');
                     }
-
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Felicidades!',
+                        text: 'Recompensa reclamada con éxito!',
+                    })
                 } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: (error as any).response?.data?.message || 'An error occurred',
+                    })
                     console.log(error);
                     return error;
                 }

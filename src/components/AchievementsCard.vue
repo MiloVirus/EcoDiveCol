@@ -72,6 +72,7 @@ const handleFileUpload = (event: Event) => {
 .cardContainerFalse,
 .cardContainerTrue {
   display: flex;
+  background-color: #212121;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -102,7 +103,7 @@ const handleFileUpload = (event: Event) => {
 }
 
 .customUploadButton input[type="file"] {
-  display: none; /* Oculta el input real */
+  display: none; 
 }
 
 .greenCheck img {

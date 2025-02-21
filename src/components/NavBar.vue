@@ -12,8 +12,8 @@
       <ul :class="['nav-links', { 'show': isOpen }]">
         <li><a href="/">Home</a></li>
         <li v-if="!isAuthenticated"><a href="/login">Login</a></li>
-        <li v-if="!isAuthenticated"><a href="/register">Register</a></li>
-        <li v-if="isAuthenticated"><a href="/dashboard">Dashboard</a></li>
+        <li v-if="!isAuthenticated"><a href="/register">Registro</a></li>
+        <li v-if="isAuthenticated"><a href="/dashboard">Perfil</a></li>
       </ul>
     </nav>
   </template>
