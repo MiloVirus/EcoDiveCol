@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import NavBar from '@/components/NavBar.vue';
 import Footer from '@/components/Footer.vue';
 import { useDiveShopsStore } from '@/stores/diveshops';
-import DiveshopCard from '@/components/DiveShopCard.vue';
+import DiveshopCard from '@/components/DiveshopCard.vue';
 
 
 const searchQuery = ref('');
