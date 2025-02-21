@@ -52,7 +52,6 @@ const viewComponents = {
 
 <template>
   <div class="dashboard-container">
-    <!-- Botón de hamburguesa -->
     <button class="hamburger-btn" @click="toggleSidebar">
       ☰
     </button>
@@ -61,8 +60,12 @@ const viewComponents = {
 
     <main class="main-content">
       <header class="header">
-        <h1 class="welcome-message">Hello, {{ name }}</h1>
-        <h1>{{ puntos }}</h1>
+        <h1 class="welcome-message">Bienvenido, {{ name }}</h1>
+        <div class="puntosContainer">
+          <h1>{{ puntos }}</h1>
+          <p>Puntos</p>
+        </div>
+        
       </header>
       <section class="tasks">
         <h2 class="section-title">Tasks for Today</h2>
@@ -85,12 +88,21 @@ const viewComponents = {
   padding: 20px;
   margin-left: 20%;
 }
-
+.puntosContainer
+{
+  text-align: center;
+  background-color: #2c2c2c;
+  padding: 5px 20px 5px 20px;
+  border-radius: 10px;
+}
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+}
+h1{
+  margin:0;
 }
 
 .welcome-message {
@@ -107,7 +119,7 @@ const viewComponents = {
   transition: transform 0.3s;
 
 }
-/* Botón de hamburguesa */
+
 .hamburger-btn {
   display: none;
   position: absolute;
@@ -121,7 +133,7 @@ const viewComponents = {
   z-index: 1000;
 }
 
-/* Estilos responsive */
+
 @media (max-width: 768px) {
   .hamburger-btn {
     display: block;
@@ -134,8 +146,12 @@ const viewComponents = {
   position: fixed;
   height: 100vh;
   transition: transform 0.3s;
-
-}
+  }
+  .header{
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
   .main-content {
     margin-left: 0;
     width: 100%;

@@ -40,7 +40,7 @@ const updateView = (view: string) => {
 <template>
   <aside class="sidebar">
     <div class="user-info">
-      <img src="https://via.placeholder.com/50" alt="User" class="user-avatar" />
+      <img src="../assets/img/userlogo.png" alt="User" class="user-avatar" />
       <div>
         <h2 class="user-name">{{ name }}</h2>
       </div>
@@ -49,11 +49,11 @@ const updateView = (view: string) => {
       <a href="#" 
          class="menu-item" 
          :class="{ active: activeLink === 'dashboard' }" 
-         @click.prevent="updateView('dashboard')">Dashboard</a>
+         @click.prevent="updateView('dashboard')">Logros</a>
       <a href="#" 
          class="menu-item" 
          :class="{ active: activeLink === 'reclamoDePuntos' }" 
-         @click.prevent="updateView('reclamoDePuntos')">Reclamo de puntos</a>
+         @click.prevent="updateView('reclamoDePuntos')">Reclamo de recompensas</a>
          <a href="#" 
          class="menu-item" 
          :class="{ active: activeLink === 'centrosDeBuceo' }" 
@@ -97,7 +97,7 @@ const updateView = (view: string) => {
 
 .menu-item {
     text-decoration: none;
-    color: #555;
+    color: #cacaca;
     margin: 10px 0;
     padding: 10px;
     border-radius: 5px;
@@ -106,11 +106,11 @@ const updateView = (view: string) => {
 
 .menu-item:hover,
 .menu-item.active {
-    background-color: #eaeaea;
+    background-color: #7e7e7e;
 }
 
 .logout-button {
-    background-color: blueviolet;
+    background-color: rgb(248, 75, 75);
     border-radius: 10%;
     border: none;
     padding: 10px;

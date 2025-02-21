@@ -27,27 +27,24 @@ defineProps({
   },
 });
 
-const rewardsStore = useRewardsStore()
+const rewardsStore = useRewardsStore();
 
-const cashoutReward = async (reward_id: string) => {  
-
-    await rewardsStore.claimReward(reward_id);
-
-}
+const cashoutReward = async (reward_id: string) => {
+  await rewardsStore.claimReward(reward_id);
+};
 </script>
 
-<template> 
-<div class="cardContainer">
-    <div class="cardContainerFalse" v-if="!completado">
-      <h3>{{ name }}</h3>
-      <p>{{ descripcion }}</p>
-      <h3>{{ puntos }}</h3>
-      <button class="cashoutButton" @click="cashoutReward(reward_id)">Cashout</button>
-    </div>
-    <div class="cardContainerTrue" v-else>
-      <h3>{{ name }}</h3>
-      <p>{{ descripcion }}</p>
-      <h3>{{ puntos }}</h3> 
+<template>
+  <div class="cardContainer">
+    <div class="cardContent" :class="{ completed: completado }">
+      <div class="cardText">
+        <h3>{{ name }}</h3>
+        <p>{{ descripcion }}</p>
+      </div>
+      <div class="cardPoints">
+        <h3>{{ puntos }}</h3>
+        <button v-if="!completado" class="cashoutButton" @click="cashoutReward(reward_id)">Reclamar</button>
+      </div>
     </div>
   </div>
 </template>
@@ -57,24 +54,32 @@ const cashoutReward = async (reward_id: string) => {
   padding: 10px;
   border-radius: 4px;
   background-color: #212121;
-  text-align: center;
+  text-align: left;
+  margin-bottom: 10px;
 }
 
-.cardContainerFalse {
+.cardContent {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.cardContainerTrue {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+.cardContent.completed {
   opacity: 0.5;
   text-decoration: line-through;
 }
+
+.cardText {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.cardPoints {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .cashoutButton {
   background-color: #6200ff;
   color: #fff;
@@ -82,7 +87,9 @@ const cashoutReward = async (reward_id: string) => {
   border-radius: 4px;
   border: none;
   cursor: pointer;
+  margin-top: 10px;
 }
+
 .cashoutButton:hover {
   background-color: #4a00c0;
 }
