@@ -65,7 +65,7 @@ const cashoutReward = async (reward_id: string) => {
 }
 
 .cardContent.completed {
-  opacity: 0.5;
+  color:rgb(75, 75, 75) ;
   text-decoration: line-through;
 }
 
