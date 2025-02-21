@@ -10,7 +10,7 @@ const name = ref<string>('');
 const lastName = ref<string>('');
 const email = ref<string>('');
 const password = ref<string>('');
-const confirmPassword = ref<string>(''); // Nuevo campo para confirmar contraseña
+const confirmPassword = ref<string>(''); 
 
 const handleRegister = async (e: Event) => {
     e.preventDefault();
@@ -33,7 +33,6 @@ const handleRegister = async (e: Event) => {
             password: password.value,
         });
 
-        // Limpiar los campos después del registro exitoso
         name.value = '';
         lastName.value = '';
         email.value = '';
