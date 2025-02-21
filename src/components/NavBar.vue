@@ -11,14 +11,19 @@
     
       <ul :class="['nav-links', { 'show': isOpen }]">
         <li><a href="/">Home</a></li>
-        <li><a href="login">Login</a></li>
-        <li><a href="register">Register</a></li>
+        <li v-if="!isAuthenticated"><a href="/login">Login</a></li>
+        <li v-if="!isAuthenticated"><a href="/register">Register</a></li>
+        <li v-if="isAuthenticated"><a href="/dashboard">Dashboard</a></li>
       </ul>
     </nav>
   </template>
   
   <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
+  import { useUsersStore } from '@/stores/users';
+  
+  const usersStore = useUsersStore();
+  const isAuthenticated = computed(() => usersStore.isAuthenticated);
   
   const isOpen = ref(false);
   </script>

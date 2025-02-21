@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import NavBar from '@/components/NavBar.vue';
 import Footer from '@/components/Footer.vue';
 import { useDiveShopsStore } from '@/stores/diveshops';
-import DiveshopCard from '@/components/DiveshopCard.vue';
+import DiveshopCard from '@/components/DiveShopCard.vue';
 
 
 const searchQuery = ref('');
@@ -43,9 +43,9 @@ const filteredDiveshops = computed(() => {
     <div class="diving-search">
       <h1>Encuentra un centro de buceo sostenible</h1>
       <div class="search-container">
-        <input type="text" v-model="searchQuery" placeholder="Search for diving centers...">
+        <input type="text" v-model="searchQuery" placeholder="Busca centros de buceo...">
         <select v-model="selectedCity">
-          <option value="">Select a city</option>
+          <option value="">Escoge una ciudad</option>
           <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
         </select>
       </div>
